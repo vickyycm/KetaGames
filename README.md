@@ -6,7 +6,7 @@ La plataforma reúne tres juegos principales:
 
 - 🟨 Palabra del Día  
 - 🔵 Rosco  
-- 🧩 Contexto  
+- 🧩 Contexto    
 
 Antes de comenzar cada juego, el usuario puede ingresar una categoría o temática. A partir de esa información, un modelo de IA adapta dinámicamente el contenido del juego, seleccionando palabras y conceptos relacionados con la temática elegida.
 
