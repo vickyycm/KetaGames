@@ -20,6 +20,13 @@ def registro():
     """Página de registro"""
     return render_template('auth/registro.html')
 
+
+@app.route('/juegos/wordle')
+def wordle():
+    """Juego Palabra del Día"""
+    return render_template('juegos/wordle.html')
+
+
 @app.errorhandler(404)
 def not_found(error):
     return render_template('404.html'), 404

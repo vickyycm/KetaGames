@@ -14,7 +14,7 @@
 <body>
 
     <nav class="navbar">
-        <div class="navbar-logo">KETAGAMES</div>
+        <div class="navbar-logo">KetaGames</div>
         <a href="{{ url_for('login') }}" class="navbar-btn">Ingresá</a>
     </nav>
 
@@ -30,20 +30,20 @@
 
     <section class="games-section" id="games-section">
         <div class="games-grid">
-            <div class="game-card">
-                <div class="game-card-content">
-                    <div class="game-card-header">
-                        <h2 class="game-card-title">PALABRA DEL DÍA</h2>
-                    </div>
-                    <p class="game-card-description">Adiviná la palabra en 6 intentos. Cada intento revela pistas sobre tu respuesta.</p>
-                    <div class="wordle-preview">
-                        <div class="wordle-letter accent">K</div>
-                        <div class="wordle-letter correct">E</div>
-                        <div class="wordle-letter correct">T</div>
-                        <div class="wordle-letter wrong">A</div>
-                    </div>
+<a href="{{ url_for('wordle') }}" class="game-card">
+            <div class="game-card-content">
+                <div class="game-card-header">
+                    <h2 class="game-card-title">PALABRA DEL DÍA</h2>
+                </div>
+                <p class="game-card-description">Adiviná la palabra en 6 intentos. Cada intento revela pistas sobre tu respuesta.</p>
+                <div class="wordle-preview">
+                    <div class="wordle-letter accent">K</div>
+                    <div class="wordle-letter correct">E</div>
+                    <div class="wordle-letter correct">T</div>
+                    <div class="wordle-letter wrong">A</div>
                 </div>
             </div>
+        </a>
 
             <div class="game-card">
                 <div class="game-card-content">
@@ -73,7 +73,7 @@
                     <div class="progress-container">
                         <div class="progress-label">
                             <span class="progress-label-text">Precisión</span>
-                            <span class="progress-label-value">76%</span>
+                            <span class="progress-label-value">75%</span>
                         </div>
                         <div class="progress-bar">
                             <div class="progress-fill"></div>
@@ -92,7 +92,7 @@
 
     <footer class="footer">
         <div class="footer-column footer-brand">
-            <h3 class="footer-title">KETAGAMES</h3>
+            <h3 class="footer-title">KetaGames</h3>
             <p class="footer-credit">© 2026 KetaGames</p>
         </div>
         <div class="footer-column footer-links">
