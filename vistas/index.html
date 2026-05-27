@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KetaGames - Tu palabra, tu mundo de juego</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-logo">KETAGAMES</div>
+        <a href="{{ url_for('login') }}" class="navbar-btn">Ingresá</a>
+    </nav>
+
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Tu palabra, tu mundo de juego.</h1>
+            <p class="hero-subtitle">Ingresá una temática y descubrí nuestros juegos.</p>
+            <a href="#games-section" class="hero-cta">Jugar</a>        
+        </div>
+    </section>
+
+
+    <section class="games-section" id="games-section">
+        <div class="games-grid">
+            <div class="game-card">
+                <div class="game-card-content">
+                    <div class="game-card-header">
+                        <h2 class="game-card-title">PALABRA DEL DÍA</h2>
+                    </div>
+                    <p class="game-card-description">Adiviná la palabra en 6 intentos. Cada intento revela pistas sobre tu respuesta.</p>
+                    <div class="wordle-preview">
+                        <div class="wordle-letter accent">K</div>
+                        <div class="wordle-letter correct">E</div>
+                        <div class="wordle-letter correct">T</div>
+                        <div class="wordle-letter wrong">A</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-card-content">
+                    <div class="game-card-header">
+                        <h2 class="game-card-title">ROSCO</h2>
+                    </div>
+                    <p class="game-card-description">Completá todas las palabras del rosco en tiempo récord.</p>
+                    <div class="rosco-indicators">
+                        <div class="indicator success"></div>
+                        <div class="indicator success"></div>
+                        <div class="indicator success"></div>
+                        <div class="indicator success"></div>
+                        <div class="indicator empty"></div>
+                        <div class="indicator success"></div>
+                        <div class="indicator empty"></div>
+                        <div class="indicator success"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-card-content">
+                    <div class="game-card-header">
+                        <h2 class="game-card-title">CONTEXTO</h2>
+                    </div>
+                    <p class="game-card-description">Descubrí las conexiones ocultas entre palabras. Agudizá tu intuición lingüística.</p>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span class="progress-label-text">Precisión</span>
+                            <span class="progress-label-value">76%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="intro-section">
+        <p class="intro-text">
+            Descubrí tu próximo juego preferido, pero ahora la temática la elegís <span class="intro-highlight">vos.</span>
+        </p>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-column footer-brand">
+            <h3 class="footer-title">KETAGAMES</h3>
+            <p class="footer-credit">© 2026 KetaGames</p>
+        </div>
+        <div class="footer-column footer-links">
+            <a href="#" class="footer-link">Sobre Nosotros</a>
+            <a href="#" class="footer-link">Privacidad</a>
+            <a href="#" class="footer-link">Contacto</a>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
