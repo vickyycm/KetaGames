@@ -30,22 +30,22 @@
 
     <section class="games-section" id="games-section">
         <div class="games-grid">
-<a href="{{ url_for('wordle') }}" class="game-card">
-            <div class="game-card-content">
-                <div class="game-card-header">
-                    <h2 class="game-card-title">PALABRA DEL DÍA</h2>
+            <a href="{{ url_for('juegos.seleccionar_tematica', juego='palabra_del_dia') }}" class="game-card">
+                <div class="game-card-content">
+                    <div class="game-card-header">
+                        <h2 class="game-card-title">PALABRA DEL DÍA</h2>
+                    </div>
+                    <p class="game-card-description">Adiviná la palabra en 6 intentos. Cada intento revela pistas sobre tu respuesta.</p>
+                    <div class="wordle-preview">
+                        <div class="wordle-letter accent">K</div>
+                        <div class="wordle-letter correct">E</div>
+                        <div class="wordle-letter correct">T</div>
+                        <div class="wordle-letter wrong">A</div>
+                    </div>
                 </div>
-                <p class="game-card-description">Adiviná la palabra en 6 intentos. Cada intento revela pistas sobre tu respuesta.</p>
-                <div class="wordle-preview">
-                    <div class="wordle-letter accent">K</div>
-                    <div class="wordle-letter correct">E</div>
-                    <div class="wordle-letter correct">T</div>
-                    <div class="wordle-letter wrong">A</div>
-                </div>
-            </div>
-        </a>
+            </a>
 
-            <div class="game-card">
+            <a href="{{ url_for('juegos.seleccionar_tematica', juego='rosco') }}" class="game-card">
                 <div class="game-card-content">
                     <div class="game-card-header">
                         <h2 class="game-card-title">ROSCO</h2>
@@ -62,9 +62,9 @@
                         <div class="indicator success"></div>
                     </div>
                 </div>
-            </div>
+            </a>
 
-            <div class="game-card">
+            <a href="{{ url_for('juegos.seleccionar_tematica', juego='contexto') }}" class="game-card">
                 <div class="game-card-content">
                     <div class="game-card-header">
                         <h2 class="game-card-title">CONTEXTO</h2>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </section>
 

@@ -1,0 +1,463 @@
+.game-banner {
+    background: linear-gradient(135deg, var(--color-dark-card) 0%, var(--color-dark-card-alt) 100%);
+    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.game-banner-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--color-text-white);
+}
+
+.game-banner-score {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+}
+
+.score-value {
+    color: var(--color-accent-yellow);
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.wordle-container {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 3rem;
+    padding: 3rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: calc(100vh - 200px);
+}
+
+.wordle-left-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2.5rem;
+}
+
+.wordle-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.wordle-tematica {
+    font-size: 1.1rem;
+    color: var(--color-primary-violet);
+    font-weight: 600;
+}
+
+.wordle-pista {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+}
+
+.wordle-board {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    background: rgba(22, 24, 36, 0.3);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(168, 85, 247, 0.1);
+}
+
+.wordle-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.8rem;
+}
+
+.wordle-cell {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.wordle-cell.empty {
+    background: rgba(148, 163, 184, 0.1);
+    border: 2px solid rgba(148, 163, 184, 0.2);
+    color: var(--color-text-secondary);
+}
+
+.wordle-cell.completed { color: #fff; font-weight: 700; }
+
+.wordle-cell.completed.estado-correcta {
+    background: #538d4e;
+    box-shadow: 0 4px 12px rgba(83, 141, 78, 0.3);
+}
+
+.wordle-cell.completed.estado-presente {
+    background: #b59f3b;
+    box-shadow: 0 4px 12px rgba(181, 159, 59, 0.3);
+}
+
+.wordle-cell.completed.estado-ausente {
+    background: #3a3a3c;
+    box-shadow: none;
+}
+
+.wordle-cell.active {
+    background: rgba(168, 85, 247, 0.2);
+    border: 2px solid var(--color-primary-violet);
+    color: var(--color-primary-violet);
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+}
+
+.wordle-cell:hover {
+    transform: scale(1.05);
+}
+
+.wordle-instruction {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    text-align: center;
+    font-weight: 400;
+    margin: 1rem 0;
+}
+
+.wordle-keyboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 500px;
+}
+
+.key-btn {
+    padding: 0.5rem;
+    background: rgba(148, 163, 184, 0.2);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 6px;
+    color: var(--color-text-white);
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
+}
+
+.key-btn:hover {
+    background: rgba(168, 85, 247, 0.3);
+    border-color: var(--color-primary-violet);
+}
+
+.key-btn.used {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.wordle-actions {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    letter-spacing: 1px;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-primary-violet) 0%, var(--color-primary-violet-bright) 100%);
+    color: #000;
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.btn-primary:hover::before {
+    opacity: 1;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.6);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--color-text-secondary);
+    border: 2px solid rgba(148, 163, 184, 0.4);
+}
+
+.btn-outline:hover {
+    border-color: var(--color-primary-violet);
+    color: var(--color-primary-violet);
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
+}
+
+.wordle-right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: sticky;
+    top: 80px;
+}
+
+.metric-card {
+    background: linear-gradient(135deg, var(--color-dark-card) 0%, var(--color-dark-card-alt) 100%);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: var(--transition);
+}
+
+.metric-card:hover {
+    border-color: rgba(168, 85, 247, 0.4);
+    box-shadow: 0 8px 20px rgba(168, 85, 247, 0.15);
+}
+
+.metric-card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--color-text-white);
+    margin-bottom: 1.2rem;
+}
+
+.timer-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.timer-display {
+    font-family: 'Courier New', monospace;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-accent-yellow);
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.timer-progress {
+    width: 100%;
+    height: 6px;
+    background: rgba(148, 163, 184, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.timer-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary-violet) 0%, var(--color-primary-violet-bright) 100%);
+    border-radius: 10px;
+    transition: width 1s linear;
+}
+
+.metrics-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.metric-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+}
+
+.metric-item:last-child {
+    border-bottom: none;
+}
+
+.metric-label {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+.metric-value {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-accent-yellow);
+    letter-spacing: 1px;
+}
+
+@media (max-width: 1024px) {
+    .wordle-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2rem 1.5rem;
+    }
+
+    .wordle-right-column {
+        position: static;
+        flex-direction: row;
+        gap: 1.5rem;
+    }
+
+    .metric-card {
+        flex: 1;
+    }
+
+    .wordle-cell {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-banner {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+
+    .game-banner-title {
+        font-size: 1.4rem;
+        letter-spacing: 1px;
+    }
+
+    .wordle-row {
+        gap: 0.6rem;
+    }
+
+    .wordle-cell {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+        gap: 0.4rem;
+    }
+
+    .wordle-board {
+        padding: 1.5rem;
+        gap: 0.6rem;
+    }
+
+    .btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .timer-display {
+        font-size: 1.6rem;
+    }
+
+    .metric-label {
+        font-size: 0.75rem;
+    }
+
+    .metric-value {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-banner {
+        padding: 1rem;
+    }
+
+    .game-banner-title {
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+    }
+
+    .game-banner-score {
+        font-size: 0.9rem;
+    }
+
+    .score-value {
+        font-size: 1.1rem;
+    }
+
+    .wordle-container {
+        grid-template-columns: 1fr;
+        padding: 1.5rem 1rem;
+    }
+
+    .wordle-right-column {
+        flex-direction: column;
+    }
+
+    .metric-card {
+        padding: 1rem;
+    }
+
+    .metric-card-title {
+        font-size: 0.9rem;
+    }
+
+    .wordle-cell {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+
+    .wordle-row {
+        gap: 0.5rem;
+    }
+
+    .wordle-actions {
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .timer-display {
+        font-size: 1.4rem;
+    }
+
+    .wordle-instruction {
+        font-size: 0.9rem;
+    }
+
+    .key-btn {
+        padding: 0.4rem;
+        font-size: 0.75rem;
+    }
+}

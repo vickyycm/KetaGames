@@ -1,7 +1,10 @@
 from flask import Flask, render_template
+from rutas.juegos_ruta import juegos_bp
 
 app = Flask(__name__, template_folder='vistas')
 app.config.from_object('config.Config')
+
+app.register_blueprint(juegos_bp)
 
 @app.route('/')
 def index():
@@ -19,12 +22,6 @@ def login():
 def registro():
     """Página de registro"""
     return render_template('auth/registro.html')
-
-
-@app.route('/juegos/wordle')
-def wordle():
-    """Juego Palabra del Día"""
-    return render_template('juegos/wordle.html')
 
 
 @app.errorhandler(404)

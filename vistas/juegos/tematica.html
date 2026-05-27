@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Temática - KetaGames</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tematica.css') }}">
+</head>
+
+<body class="tematica-page">
+
+    <nav class="navbar">
+        <a href="{{ url_for('index') }}" class="navbar-logo navbar-logo-link">KetaGames</a>
+    </nav>
+
+    <div class="tematica-container">
+        <div class="tematica-card">
+            <h1 class="tematica-title">¿Cuál va a ser la temática de hoy?</h1>
+
+            <form class="tematica-form" onsubmit="enviarTematica(event)">
+                <input
+                    type="text"
+                    class="tematica-input"
+                    id="input-tematica"
+                    name="theme"
+                    placeholder="Ej: Series de los 2010s, Películas, Ciencia..."
+                    required
+                    autocomplete="off"
+                >
+                <p id="error-tematica" class="error-message"></p>
+                <button type="submit" id="btn-jugar" class="tematica-button">
+                    Comenzar a jugar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-column footer-brand">
+            <h3 class="footer-title">KetaGames</h3>
+            <p class="footer-credit">© 2026 KetaGames</p>
+        </div>
+        <div class="footer-column footer-links">
+            <a href="#" class="footer-link">Sobre Nosotros</a>
+            <a href="#" class="footer-link">Privacidad</a>
+            <a href="#" class="footer-link">Contacto</a>
+        </div>
+    </footer>
+
+    <script>
+        const JUEGO = "{{ juego }}";
+    </script>
+    <script src="{{ url_for('static', filename='js/tematica.js') }}"></script>
+
+</body>
+
+</html>
