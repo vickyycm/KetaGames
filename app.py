@@ -1,10 +1,13 @@
 from flask import Flask, render_template
 from rutas.juegos_ruta import juegos_bp
+from rutas.auth_ruta import auth_bp
 
 app = Flask(__name__, template_folder='vistas')
+app.secret_key = "ketagames-secret"
 app.config.from_object('config.Config')
 
 app.register_blueprint(juegos_bp)
+app.register_blueprint(auth_bp)
 
 @app.route('/')
 def index():

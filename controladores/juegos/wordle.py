@@ -18,7 +18,7 @@ def iniciar_partida(id_usuario: str, tematica: str) -> dict:
         "palabra": "GATOS",
         "pista": "Animal doméstico muy popular"
     }
-    # Con IA descomentar
+    # Con IA descomentar esto
     # try:
     #     resultado_ia = generar_palabra_por_tematica(tematica)
     # except Exception as e:
