@@ -4,6 +4,8 @@ firebase-admin==6.9.0
  
 Flask-Login==0.6.3
 
+python-dotenv
+
 pyrebase4
 
 bcrypt==4.3.0

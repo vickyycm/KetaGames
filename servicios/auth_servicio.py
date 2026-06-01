@@ -1,16 +1,18 @@
+import os
+from dotenv import load_dotenv
 import pyrebase
 
-const firebaseConfig = {
-    apiKey: "AIzaSyBB38NzFrv5jScFiQHc9flcv2e3NrP_YRw",
-    authDomain: "ketagames-7402d.firebaseapp.com",
-    projectId: "ketagames-7402d",
-    storageBucket: "ketagames-7402d.firebasestorage.app",
-    messagingSenderId: "1033685707707",
-    appId: "1:1033685707707:web:8cb0f5dcf9e06b020af29e",
-    measurementId: "G-NXEWF4CF1P"
-  };
+load_dotenv()
+
+firebase_config = {
+    "apiKey": os.getenv("FIREBASE_API_KEY"),
+    "authDomain": os.getenv("FIREBASE_AUTH_DOMAIN"),
+    "projectId": os.getenv("FIREBASE_PROJECT_ID"),
+    "storageBucket": os.getenv("FIREBASE_STORAGE_BUCKET"),
+    "messagingSenderId": os.getenv("FIREBASE_MESSAGING_SENDER_ID"),
+    "appId": os.getenv("FIREBASE_APP_ID"),
+    "measurementId": os.getenv("FIREBASE_MEASUREMENT_ID")
+}
 
 firebase = pyrebase.initialize_app(firebase_config)
-
 auth = firebase.auth()
-
