@@ -1,6 +1,6 @@
 from datetime import datetime
 from db.firebase import db
-from servicios.ia_servicio import generar_palabra_por_tematica
+from servicios.ia_servicio import generar_palabras_wordle
 from servicios.wordle_servicio import (
     evaluar_intento,
     intento_valido,
@@ -26,9 +26,11 @@ def obtener_palabra_de_tematica(tematica: str) -> dict:
         
     if not palabras_disponibles:
         # try:
-        #     resultado_ia = generar_palabra_por_tematica(tematica)
+        #     resultado_ia = generar_palabras_wordle(tematica)
+        #     palabras_disponibles = resultado_ia["palabras"]
+        #     pistas = resultado_ia["pistas"]
         # except Exception as e:
-        #     return {"error": f"No se pudo generar la palabra: {str(e)}"}
+        #     return {"error": f"No se pudo generar palabras: {str(e)}"}
         
         resultado_ia_batch = {
             "palabras": ["GATOS", "PERRO", "CASAS", "ARBOL", "PLAZA"],
