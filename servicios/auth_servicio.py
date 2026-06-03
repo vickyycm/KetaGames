@@ -16,18 +16,27 @@ def crear_o_actualizar_usuario(decoded_token: dict) -> dict:
 
     ahora = datetime.utcnow().isoformat()
 
+    firebase_info = decoded_token.get("firebase", {})
+    proveedor = firebase_info.get("sign_in_provider", "password") # 'password' es email/contraseña
+    if proveedor == "google.com":
+        proveedor = "google"
+
     if doc.exists:
         ref.update({"ultimo_acceso": ahora})
         data = doc.to_dict()
         data["ultimo_acceso"] = ahora
         return data
     else:
+        email = decoded_token.get("email", "")
+        nombre_defecto = email.split("@")[0] if email else "Usuario"
+        nombre = decoded_token.get("name") or nombre_defecto
+
         nuevo = {
             "uid": uid,
-            "nombre": decoded_token.get("name", ""),
-            "email": decoded_token.get("email", ""),
+            "nombre": nombre,
+            "email": email,
             "foto_url": decoded_token.get("picture", None),
-            "proveedor": "google",
+            "proveedor": proveedor,
             "creado_en": ahora,
             "ultimo_acceso": ahora
         }

@@ -115,7 +115,6 @@
     const estaLogueado = "{{ 'true' if usuario_logueado else 'false' }}" === "true";    
     function verificarLogin(event, el) {
         if (!estaLogueado) {
-            event.preventDefault();
             const destino = el.getAttribute("href");
             window.location.href = "/auth/login?next=" + encodeURIComponent(destino);
         }

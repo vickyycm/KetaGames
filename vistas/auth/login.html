@@ -6,8 +6,6 @@
     <title>Ingresar - KetaGames</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-
-   
 </head>
 <body>
     <nav class="navbar">
@@ -17,10 +15,28 @@
     <div class="login-container">
         <div class="login-card">
             <div class="login-logo">KetaGames</div>
-            <h1 class="login-title">Bienvenido</h1>
-            <p class="login-subtitle">Ingresá para guardar tu progreso y competir en los rankings.</p>
+            <h1 class="login-title" id="auth-title">Bienvenido</h1>
+            <p class="login-subtitle" id="auth-subtitle">Ingresá para guardar tu progreso y competir en los rankings.</p>
 
-            <button class="btn-google" id="btn-google" onclick="loginConGoogle()">
+            <form id="form-auth" class="auth-form" onsubmit="procesarAuth(event)">
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <input type="email" id="email" class="form-input" required placeholder="tu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" class="form-input" required placeholder="••••••••" minlength="6">
+                </div>
+                <button type="submit" class="btn-primary" id="btn-submit">Ingresar</button>
+            </form>
+
+            <div class="divider">
+                <div class="divider-line"></div>
+                <span class="divider-text">o continuar con</span>
+                <div class="divider-line"></div>
+            </div>
+
+            <button class="btn-google" id="btn-google" type="button" onclick="loginConGoogle()">
                 <svg class="google-icon" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -34,12 +50,12 @@
 
             <div class="divider">
                 <div class="divider-line"></div>
-                <span class="divider-text">¿Por qué crear cuenta?</span>
+                <span class="divider-text">¿No tenés cuenta?</span>
                 <div class="divider-line"></div>
             </div>
 
-            <p class="login-footer-text">
-                Guardá tu historial de partidas, acumulá puntos y competí en los rankings de cada juego.
+            <p class="login-footer-text" id="auth-toggle-text">
+                ¿Primera vez? <span class="toggle-auth" onclick="cambiarModoAuth()">Registrate</span>
             </p>
         </div>
     </div>
@@ -56,56 +72,145 @@
         </div>
     </footer>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+    import { 
+        getAuth, 
+        signInWithPopup, 
+        GoogleAuthProvider,
+        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBB38NzFrv5jScFiQHc9flcv2e3NrP_YRw",
-            authDomain: "ketagames-7402d.firebaseapp.com",
-            projectId: "ketagames-7402d",
-            storageBucket: "ketagames-7402d.firebasestorage.app",
-            messagingSenderId: "1033685707707",
-            appId: "1:1033685707707:web:8cb0f5dcf9e06b020af29e"
-        };
+    const firebaseConfig = {
+        apiKey: "AIzaSyBB38NzFrv5jScFiQHc9flcv2e3NrP_YRw",
+        authDomain: "ketagames-7402d.firebaseapp.com",
+        projectId: "ketagames-7402d",
+        storageBucket: "ketagames-7402d.firebasestorage.app",
+        messagingSenderId: "1033685707707",
+        appId: "1:1033685707707:web:8cb0f5dcf9e06b020af29e"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
 
-        window.loginConGoogle = async function() {
-            const btn = document.getElementById("btn-google");
-            const errorDiv = document.getElementById("login-error");
-            btn.disabled = true;
-            btn.textContent = "Conectando...";
-            errorDiv.classList.remove("visible");
+    let esModoRegistro = false;
 
-            try {
-                const result = await signInWithPopup(auth, provider);
-                const idToken = await result.user.getIdToken();
+    window.cambiarModoAuth = function() {
+        esModoRegistro = !esModoRegistro;
+        const title = document.getElementById("auth-title");
+        const subtitle = document.getElementById("auth-subtitle");
+        const btnSubmit = document.getElementById("btn-submit");
+        const toggleText = document.getElementById("auth-toggle-text");
+        const errorDiv = document.getElementById("login-error");
+        
+        errorDiv.classList.remove("visible");
 
-                const res = await fetch("/auth/google/callback", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ id_token: idToken })
-                });
-
-                const data = await res.json();
-
-                if (data.ok) {
-                    const params = new URLSearchParams(window.location.search);
-                    const next = params.get("next");
-                    window.location.href = next || "/";
-                } else {
-                    throw new Error(data.error || "Error al iniciar sesión");
-                }
-            } catch (err) {
-                errorDiv.textContent = "No se pudo iniciar sesión. Intentá de nuevo.";
-                errorDiv.classList.add("visible");
-                btn.disabled = false;
-                btn.innerHTML = `<svg class="google-icon" viewBox="0 0 24 24">...</svg> Continuar con Google`;
-            }
+        if (esModoRegistro) {
+            title.textContent = "Crear Cuenta";
+            subtitle.textContent = "Registrate para empezar a registrar tus récords globales.";
+            btnSubmit.textContent = "Registrarse";
+            toggleText.innerHTML = `¿Ya tenés una cuenta? <span class="toggle-auth" onclick="cambiarModoAuth()">Iniciá Sesión</span>`;
+        } else {
+            title.textContent = "Bienvenido";
+            subtitle.textContent = "Ingresá para guardar tu progreso y competir en los rankings.";
+            btnSubmit.textContent = "Ingresar";
+            toggleText.innerHTML = `¿Sos nuevo por acá? <span class="toggle-auth" onclick="cambiarModoAuth()">Registrate gratis</span>`;
         }
-    </script>
+    }
+
+    async function enviarTokenAlBackend(idToken) {
+        try {
+            const res = await fetch("/auth/google/callback", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id_token: idToken })
+            });
+            return await res.json();
+        } catch (e) {
+            return { ok: false, error: "Error de conexión con el servidor backend." };
+        }
+    }
+
+    window.procesarAuth = async function(event) {
+        event.preventDefault();
+        const email = document.getElementById("email").value.strip ? document.getElementById("email").value.strip() : document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const btnSubmit = document.getElementById("btn-submit");
+        const errorDiv = document.getElementById("login-error");
+
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = esModoRegistro ? "Creando cuenta..." : "Ingresando...";
+        errorDiv.classList.remove("visible");
+
+        try {
+            let userCredential;
+            if (esModoRegistro) {
+                userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            } else {
+                userCredential = await signInWithEmailAndPassword(auth, email, password);
+            }
+
+            const idToken = await userCredential.user.getIdToken();
+            const data = await enviarTokenAlBackend(idToken);
+
+            if (data.ok) {
+                const params = new URLSearchParams(window.location.search);
+                const next = params.get("next");
+                window.location.href = next || "/";
+            } else {
+                throw new Error(data.error || "Error en la sesión del servidor.");
+            }
+        } catch (err) {
+            console.error("Error capturado:", err);
+            errorDiv.classList.add("visible"); // <-- Corregido acá (Puse .add a secas antes)
+            
+            if (err.code === "auth/email-already-in-use") {
+                errorDiv.textContent = "Este email ya está registrado.";
+            } else if (err.code === "auth/wrong-password" || err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
+                errorDiv.textContent = "Credenciales incorrectas. Verificalas.";
+            } else if (err.code === "auth/weak-password") {
+                errorDiv.textContent = "La contraseña debe tener al menos 6 caracteres.";
+            } else {
+                errorDiv.textContent = err.message || "Ocurrió un error. Intentá de nuevo.";
+            }
+        } finally {
+            btnSubmit.disabled = false;
+            btnSubmit.textContent = esModoRegistro ? "Registrarse" : "Ingresar";
+        }
+    }
+
+    window.loginConGoogle = async function() {
+        const btn = document.getElementById("btn-google");
+        const errorDiv = document.getElementById("login-error");
+        
+        const contenidoOriginal = btn.innerHTML;
+        btn.disabled = true;
+        btn.textContent = "Conectando...";
+        errorDiv.classList.remove("visible");
+
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const idToken = await result.user.getIdToken();
+            const data = await enviarTokenAlBackend(idToken);
+
+            if (data.ok) {
+                const params = new URLSearchParams(window.location.search);
+                const next = params.get("next");
+                window.location.href = next || "/";
+            } else {
+                throw new Error(data.error || "Error al iniciar sesión");
+            }
+        } catch (err) {
+            console.error(err);
+            errorDiv.textContent = "No se pudo iniciar sesión con Google.";
+            errorDiv.classList.add("visible");
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = contenidoOriginal; // <-- Corregido para no romper el SVG
+        }
+    }
+</script>
 </body>
 </html>
