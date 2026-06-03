@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 from rutas.juegos_ruta import juegos_bp
 from rutas.auth_ruta import auth_bp
 
@@ -8,6 +8,13 @@ app.config.from_object('config.Config')
 
 app.register_blueprint(juegos_bp)
 app.register_blueprint(auth_bp)
+
+@app.context_processor
+def inject_usuario():
+    return {
+        "usuario_logueado": "uid" in session,
+        "usuario_nombre": session.get("nombre", "")
+    }
 
 @app.route('/')
 def index():

@@ -6,7 +6,7 @@ Flask-Login==0.6.3
 
 python-dotenv
 
-pyrebase4
+requests==2.32.3
 
 bcrypt==4.3.0
 
