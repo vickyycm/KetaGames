@@ -1,7 +1,5 @@
 from datetime import datetime
 
-# hay cosas que cambiar una vez este la conexion a firebase
-# todavia no se que datos van
 class SesionWordle:
     def __init__(self, id_usuario: str, tematica: str, palabra: str, pista: str):
         self.id_usuario = id_usuario

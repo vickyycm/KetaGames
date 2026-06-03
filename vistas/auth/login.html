@@ -116,7 +116,7 @@
             title.textContent = "Bienvenido";
             subtitle.textContent = "Ingresá para guardar tu progreso y competir en los rankings.";
             btnSubmit.textContent = "Ingresar";
-            toggleText.innerHTML = `¿Sos nuevo por acá? <span class="toggle-auth" onclick="cambiarModoAuth()">Registrate gratis</span>`;
+            toggleText.innerHTML = `¿Primera vez? <span class="toggle-auth" onclick="cambiarModoAuth()">Registrate gratis</span>`;
         }
     }
 
@@ -135,7 +135,7 @@
 
     window.procesarAuth = async function(event) {
         event.preventDefault();
-        const email = document.getElementById("email").value.strip ? document.getElementById("email").value.strip() : document.getElementById("email").value;
+        const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value;
         const btnSubmit = document.getElementById("btn-submit");
         const errorDiv = document.getElementById("login-error");
@@ -164,7 +164,7 @@
             }
         } catch (err) {
             console.error("Error capturado:", err);
-            errorDiv.classList.add("visible"); // <-- Corregido acá (Puse .add a secas antes)
+            errorDiv.classList.add("visible");
             
             if (err.code === "auth/email-already-in-use") {
                 errorDiv.textContent = "Este email ya está registrado.";
@@ -208,7 +208,7 @@
             errorDiv.classList.add("visible");
         } finally {
             btn.disabled = false;
-            btn.innerHTML = contenidoOriginal; // <-- Corregido para no romper el SVG
+            btn.innerHTML = contenidoOriginal; 
         }
     }
 </script>

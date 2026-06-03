@@ -166,7 +166,8 @@ function mostrarPista() {
 function mostrarResultado(data) {
   document.querySelector("main.wordle-container").style.display = "none";
   const pantalla = document.getElementById("pantalla-resultado");
-  pantalla.classList.add("visible");
+  
+  pantalla.classList.add("visible", "result-screen-expanded");
 
   const gano = data.estado === "ganada";
   document.getElementById("resultado-titulo").textContent = gano ? "¡Ganaste!" : "¡Perdiste!";
@@ -175,6 +176,25 @@ function mostrarResultado(data) {
     : `La palabra era: ${data.palabra}`;
   document.getElementById("resultado-puntaje").textContent = gano
     ? `Puntuación: ${data.puntaje} pts` : "";
+
+  if (!USUARIO_LOGUEADO) {
+    if (!document.getElementById("aviso-invitado")) {
+      const aviso = document.createElement("div");
+      aviso.id = "aviso-invitado";
+      aviso.className = "metric-card aviso-invitado-box"; 
+      
+      aviso.innerHTML = `
+        <h3 class="metric-card-title">MODO INVITADO</h3>
+        <p class="result-word aviso-separador">Los puntos de esta partida no se guardaron en el sistema.</p>
+        <a href="/auth/login" class="navbar-btn">
+          Iniciar Sesión
+        </a>
+      `;
+      
+      const botonJugar = pantalla.querySelector("button");
+      pantalla.insertBefore(aviso, botonJugar);
+    }
+  }
 }
 
 function mostrarError(msg) {

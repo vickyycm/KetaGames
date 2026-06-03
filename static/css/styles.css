@@ -93,7 +93,26 @@ body {
     background: rgba(255, 255, 255, 0.2);
     transition: left 0.3s ease;
 }
+.result-screen-expanded {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 4rem 1rem;
+}
 
+.aviso-invitado-box {
+    max-width: 450px;
+    width: 100%;
+    padding: 2.5rem 2rem !important;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+}
+.aviso-separador {
+    margin-bottom: 1.8rem;
+}
 .navbar-btn:hover::before {
     left: 100%;
 }

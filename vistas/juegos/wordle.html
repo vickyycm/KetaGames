@@ -13,7 +13,14 @@
 
     <nav class="navbar">
         <a href="{{ url_for('index') }}" class="navbar-logo">KETAGAMES</a>
-        <a href="{{ url_for('login') }}" class="navbar-btn">Ingresá</a>
+        {% if usuario_logueado %}
+            <div style="display:flex; align-items:center; gap:1rem;">
+                <span style="color:var(--color-text-secondary); font-size:0.9rem;">{{ usuario_nombre }}</span>
+                <a href="{{ url_for('auth_bp.logout') }}" class="navbar-btn">Salir</a>
+            </div>
+        {% else %}
+            <a href="{{ url_for('login') }}?next={{ request.full_path | urlencode }}" class="navbar-btn">Ingresá</a>
+        {% endif %}
     </nav>
 
     <section class="game-banner">
@@ -83,7 +90,10 @@
         <h2 id="resultado-titulo" class="result-title"></h2>
         <p id="resultado-palabra" class="result-word"></p>
         <p id="resultado-puntaje" class="result-score"></p>
-        <button class="btn btn-primary" onclick="window.location.href='{{ url_for('juegos.seleccionar_tematica', juego='wordle') }}'">
+
+        {% set url_juego = url_for('juegos.seleccionar_tematica', juego='wordle') %}
+
+        <button class="btn btn-primary" onclick="window.location.href='{{ url_juego }}'">
             Jugar de nuevo
         </button>
     </div>
@@ -100,9 +110,11 @@
         </div>
     </footer>
 
-    <script>
-    const SESION = {{ sesion | tojson }};
-    </script>
+<script>
+    const datosSesionTexto = '{{ sesion | tojson if sesion else "{}" }}';
+    const SESION = JSON.parse(datosSesionTexto);
+    const USUARIO_LOGUEADO = "{{ 'true' if usuario_logueado else 'false' }}" === "true";
+</script>
 
 <script src="{{ url_for('static', filename='js/wordle.js') }}"></script>
 

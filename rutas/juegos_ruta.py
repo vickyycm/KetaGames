@@ -39,8 +39,15 @@ def wordle_jugar():
     if "error" in estado:
         return redirect(url_for("juegos.seleccionar_tematica", juego="palabra_del_dia"))
 
-    return render_template("juegos/wordle.html", sesion=estado)
+    usuario_logueado = "id_usuario" in session and session["id_usuario"] != "invitado"
+    usuario_nombre = session.get("nombre", "Invitado")
 
+    return render_template(
+        "juegos/wordle.html", 
+        sesion=estado, 
+        usuario_logueado=usuario_logueado,
+        usuario_nombre=usuario_nombre
+    )
 
 @juegos_bp.route("/juegos/wordle/iniciar", methods=["POST"])
 def wordle_iniciar():
