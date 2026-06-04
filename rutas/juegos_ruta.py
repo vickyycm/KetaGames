@@ -161,7 +161,7 @@ def contexto_intento():
 
 
 @juegos_bp.route("/juegos/contexto/rendirse", methods=["POST"])
-def contexto_rendirse():
+def ruta_contexto_rendirse():
     data = request.get_json()
     id_sesion = data.get("id_sesion", "").strip()
 

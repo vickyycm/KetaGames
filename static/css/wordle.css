@@ -461,3 +461,13 @@
         font-size: 0.75rem;
     }
 }
+
+#pantalla-resultado {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 3rem 2rem;
+}

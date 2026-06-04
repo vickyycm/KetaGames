@@ -26,9 +26,9 @@ def obtener_palabra_contexto(tematica: str) -> dict:
 
         palabras_disponibles = [
             "FAMILIA", "HOGAR", "TECHO", "PUERTA", "COCINA",
-            "JARDIN", "PATIO", "CUARTO", "SALA", "MUEBLE",
-            "CAMA", "MESA", "SILLA", "LAMP", "VENTANA",
-            "PARED", "SUELO", "TECHO", "BALCON", "GARAGE"
+            "JARDIN", "PATIO", "CUARTO", "SALON", "MUEBLE",
+            "CAMA", "MESA", "SILLA", "VENTANA", "PARED",
+            "SUELO", "BALCON", "TECHO", "ARMARIO", "PASILLO"
         ]
 
     palabra_elegida = random.choice(palabras_disponibles)
