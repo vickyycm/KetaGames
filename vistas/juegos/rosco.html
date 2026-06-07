@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rosco - KetaGames</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rosco.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="{{ url_for('index') }}" class="navbar-logo">KETAGAMES</a>
+        <a href="{{ url_for('login') }}" class="navbar-btn">Ingresá</a>
+    </nav>
+
+    <section class="game-banner">
+        <h1 class="game-banner-title">JUEGO / ROSCO</h1>
+
+        <div class="game-banner-score">
+            Score:
+            <span id="score-valor">0</span>
+        </div>
+    </section>
+
+    <main class="rosco-container">
+
+        <section class="rosco-board-section">
+
+            <div id="rosco" class="rosco-board">
+
+            </div>
+
+        </section>
+
+        <aside class="rosco-panel">
+
+            <div class="metric-card">
+
+                <h3 class="metric-card-title">
+                    TEMÁTICA
+                </h3>
+
+                <div id="tematica-actual">
+                </div>
+
+            </div>
+
+            <div class="metric-card">
+
+                <h3 class="metric-card-title">
+                    LETRA ACTUAL
+                </h3>
+
+                <div id="letra-actual">
+                </div>
+
+            </div>
+
+            <div class="metric-card">
+
+                <h3 class="metric-card-title">
+                    PREGUNTA
+                </h3>
+
+                <p id="pregunta-actual">
+                </p>
+
+            </div>
+
+            <input
+                type="text"
+                id="respuesta-input"
+                autocomplete="off"
+                placeholder="Ingresá tu respuesta"
+            >
+
+            <p id="error-juego" class="error-message"></p>
+
+            <div class="rosco-actions">
+
+                <button
+                    class="btn btn-primary"
+                    id="btn-responder"
+                >
+                    RESPONDER
+                </button>
+
+                <button
+                    class="btn btn-outline"
+                    id="btn-pasar"
+                >
+                    PASAPALABRA
+                </button>
+
+            </div>
+
+            <div class="metric-card">
+
+                <h3 class="metric-card-title">
+                    ESTADÍSTICAS
+                </h3>
+
+                <div class="metrics-list">
+
+                    <div class="metric-item">
+                        <span>Correctas</span>
+                        <span id="correctas">0</span>
+                    </div>
+
+                    <div class="metric-item">
+                        <span>Incorrectas</span>
+                        <span id="incorrectas">0</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </main>
+
+    <div id="pantalla-resultado" class="result-screen">
+
+        <h2 id="resultado-titulo" class="result-title"></h2>
+
+        <p id="resultado-puntaje" class="result-score"></p>
+
+    </div>
+
+    <footer class="footer">
+
+        <div class="footer-column footer-brand">
+            <h3 class="footer-title">KETAGAMES</h3>
+            <p class="footer-credit">© 2026 KetaGames</p>
+        </div>
+
+        <div class="footer-column footer-links">
+            <a href="#" class="footer-link">Sobre Nosotros</a>
+            <a href="#" class="footer-link">Privacidad</a>
+            <a href="#" class="footer-link">Contacto</a>
+        </div>
+
+    </footer>
+
+    <script>
+        const SESION = {{ sesion | tojson }};
+    </script>
+
+    <script src="{{ url_for('static', filename='js/rosco.js') }}"></script>
+
+</body>
+
+</html>
