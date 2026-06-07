@@ -1,172 +1,162 @@
-LETRAS = [
-    "A", "B", "C", "D", "E", "F", "G",
-    "H", "I", "J", "K", "L", "M",
-    "N", "O", "P", "Q", "R", "S",
-    "T", "U", "V", "W", "X", "Y", "Z"
-]
+LETRAS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-def obtener_rosco_mock():
-    return [
-        {
-            "letra": "A",
-            "pregunta": "Club inglés de Londres",
-            "respuesta": "ARSENAL",
+
+def generar_preguntas_demo():
+    return {
+        "A": {
+            "respuesta": "ARGENTINA",
+            "definicion": "País campeón del mundo en 2022",
             "estado": "pendiente"
         },
-        {
-            "letra": "B",
-            "pregunta": "Selección campeona del mundo cinco veces",
-            "respuesta": "BRASIL",
+        "B": {
+            "respuesta": "BOCA",
+            "definicion": "Club de fútbol de la Ribera",
             "estado": "pendiente"
         },
-        {
-            "letra": "C",
-            "pregunta": "Apellido de Cristiano",
-            "respuesta": "CRISTIANO",
+        "C": {
+            "respuesta": "CORDOBA",
+            "definicion": "Provincia argentina muy conocida",
             "estado": "pendiente"
         },
-        {
-            "letra": "D",
-            "pregunta": "Jugador histórico argentino de apellido Maradona",
-            "respuesta": "DIEGO",
+        "D": {
+            "respuesta": "DOLAR",
+            "definicion": "Moneda de Estados Unidos",
             "estado": "pendiente"
         },
-        {
-            "letra": "E",
-            "pregunta": "Equipo inglés de Liverpool",
-            "respuesta": "EVERTON",
+        "E": {
+            "respuesta": "ESPAÑA",
+            "definicion": "País europeo",
             "estado": "pendiente"
         },
-        {
-            "letra": "F",
-            "pregunta": "Club español de Barcelona",
-            "respuesta": "FCBARCELONA",
+        "F": {
+            "respuesta": "FUTBOL",
+            "definicion": "Deporte más popular de Argentina",
             "estado": "pendiente"
         },
-        {
-            "letra": "G",
-            "pregunta": "Club francés de París",
-            "respuesta": "GPS",
+        "G": {
+            "respuesta": "GATO",
+            "definicion": "Animal doméstico felino",
             "estado": "pendiente"
         },
-        {
-            "letra": "H",
-            "pregunta": "Delantero francés Thierry",
-            "respuesta": "HENRY",
+        "H": {
+            "respuesta": "HIELO",
+            "definicion": "Agua en estado sólido",
             "estado": "pendiente"
         },
-        {
-            "letra": "I",
-            "pregunta": "Club italiano de Milán",
-            "respuesta": "INTER",
+        "I": {
+            "respuesta": "IGLESIA",
+            "definicion": "Lugar de culto religioso",
             "estado": "pendiente"
         },
-        {
-            "letra": "J",
-            "pregunta": "País donde nació Cruyff",
-            "respuesta": "JAPON",
+        "J": {
+            "respuesta": "JARDIN",
+            "definicion": "Espacio con plantas y flores",
             "estado": "pendiente"
         },
-        {
-            "letra": "K",
-            "pregunta": "Apellido del arquero alemán Oliver",
-            "respuesta": "KAHN",
+        "K": {
+            "respuesta": "KARATE",
+            "definicion": "Arte marcial japonés",
             "estado": "pendiente"
         },
-        {
-            "letra": "L",
-            "pregunta": "Club inglés conocido como los Reds",
-            "respuesta": "LIVERPOOL",
+        "L": {
+            "respuesta": "LIBRO",
+            "definicion": "Conjunto de páginas encuadernadas",
             "estado": "pendiente"
         },
-        {
-            "letra": "M",
-            "pregunta": "Apellido del capitán argentino campeón del mundo 2022",
-            "respuesta": "MESSI",
+        "M": {
+            "respuesta": "MONTAÑA",
+            "definicion": "Elevación natural del terreno",
             "estado": "pendiente"
         },
-        {
-            "letra": "N",
-            "pregunta": "Apellido del delantero brasileño Neymar",
-            "respuesta": "NEYMAR",
+        "N": {
+            "respuesta": "NARANJA",
+            "definicion": "Fruta cítrica",
             "estado": "pendiente"
         },
-        {
-            "letra": "O",
-            "pregunta": "Apellido del delantero Michael del Bayern",
-            "respuesta": "OWEN",
+        "O": {
+            "respuesta": "OCEANO",
+            "definicion": "Gran masa de agua salada",
             "estado": "pendiente"
         },
-        {
-            "letra": "P",
-            "pregunta": "Apellido del arquero argentino campeón del mundo Ubaldo",
-            "respuesta": "PUMPIDO",
+        "P": {
+            "respuesta": "PERRO",
+            "definicion": "Animal considerado el mejor amigo del hombre",
             "estado": "pendiente"
         },
-        {
-            "letra": "Q",
-            "pregunta": "Apellido del ex jugador Ricardo de River",
-            "respuesta": "QUARESMA",
+        "Q": {
+            "respuesta": "QUESO",
+            "definicion": "Alimento derivado de la leche",
             "estado": "pendiente"
         },
-        {
-            "letra": "R",
-            "pregunta": "Apellido de Cristiano",
-            "respuesta": "RONALDO",
+        "R": {
+            "respuesta": "RIO",
+            "definicion": "Corriente natural de agua",
             "estado": "pendiente"
         },
-        {
-            "letra": "S",
-            "pregunta": "Club alemán de Gelsenkirchen",
-            "respuesta": "SCHALKE",
+        "S": {
+            "respuesta": "SOL",
+            "definicion": "Estrella del sistema solar",
             "estado": "pendiente"
         },
-        {
-            "letra": "T",
-            "pregunta": "Apellido del delantero francés David",
-            "respuesta": "TREZEGUET",
+        "T": {
+            "respuesta": "TIGRE",
+            "definicion": "Felino salvaje rayado",
             "estado": "pendiente"
         },
-        {
-            "letra": "U",
-            "pregunta": "Club de Montevideo",
-            "respuesta": "URUGUAY",
+        "U": {
+            "respuesta": "UNIVERSIDAD",
+            "definicion": "Institución de educación superior",
             "estado": "pendiente"
         },
-        {
-            "letra": "V",
-            "pregunta": "Apellido del ex arquero español Victor",
-            "respuesta": "VALDES",
+        "V": {
+            "respuesta": "VENTANA",
+            "definicion": "Abertura en una pared para iluminar",
             "estado": "pendiente"
         },
-        {
-            "letra": "W",
-            "pregunta": "Apellido del delantero inglés Wayne",
-            "respuesta": "WAYNE",
+        "W": {
+            "respuesta": "WHISKY",
+            "definicion": "Bebida alcohólica destilada",
             "estado": "pendiente"
         },
-        {
-            "letra": "X",
-            "pregunta": "Apellido del mediocampista Xabi",
-            "respuesta": "XABI",
+        "X": {
+            "respuesta": "XILOFON",
+            "definicion": "Instrumento musical de percusión",
             "estado": "pendiente"
         },
-        {
-            "letra": "Y",
-            "pregunta": "Apellido del ex defensor argentino Walter",
-            "respuesta": "YACOB",
+        "Y": {
+            "respuesta": "YATE",
+            "definicion": "Embarcación de recreo",
             "estado": "pendiente"
         },
-        {
-            "letra": "Z",
-            "pregunta": "Apellido del delantero chileno Iván",
-            "respuesta": "ZAMORANO",
+        "Z": {
+            "respuesta": "ZORRO",
+            "definicion": "Animal salvaje parecido a un perro",
             "estado": "pendiente"
         }
-    ]
+    }
 
-def verificar_respuesta(respuesta_usuario, respuesta_correcta):
-    return respuesta_usuario.strip().upper() == respuesta_correcta.strip().upper()
 
-def calcular_puntaje(correctas):
-    return correctas * 10
+def obtener_siguiente_letra(preguntas):
+
+    for letra in LETRAS:
+        if preguntas[letra]["estado"] == "pendiente":
+            return letra
+
+    for letra in LETRAS:
+        if preguntas[letra]["estado"] == "pasada":
+            return letra
+
+    return None
+def hay_preguntas_pendientes(preguntas):
+
+    for letra in LETRAS:
+        if preguntas[letra]["estado"] in [
+            "pendiente",
+            "pasada"
+        ]:
+            return True
+
+    return False
+
+def calcular_puntaje(aciertos):
+    return aciertos * 10
