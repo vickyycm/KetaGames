@@ -62,7 +62,7 @@ Juego de asociación semántica donde el usuario debe encontrar la palabra objet
 
 - Python  
 - Flask  
-- MongoDB  
+- Firestore  
 - HTML5  
 - CSS3  
 - JavaScript  
