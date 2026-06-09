@@ -75,7 +75,10 @@ function renderizarRosco() {
     const letras =
         Object.keys(SESION.preguntas);
 
-    letras.forEach(letra => {
+    const radio = 260;
+    const centro = 325;
+
+    letras.forEach((letra, index) => {
 
         const pregunta =
             SESION.preguntas[letra];
@@ -83,9 +86,25 @@ function renderizarRosco() {
         const nodo =
             document.createElement("div");
 
-        nodo.classList.add(
-            "rosco-letter"
-        );
+        nodo.classList.add("letra");
+
+        const angulo =
+            ((Math.PI * 2) / letras.length) *
+            index -
+            Math.PI / 2;
+
+        const x =
+            centro +
+            radio * Math.cos(angulo) -
+            25;
+
+        const y =
+            centro +
+            radio * Math.sin(angulo) -
+            25;
+
+        nodo.style.left = `${x}px`;
+        nodo.style.top = `${y}px`;
 
         nodo.textContent = letra;
 
@@ -94,13 +113,36 @@ function renderizarRosco() {
             SESION.letra_actual
         ) {
             nodo.classList.add(
-                "actual"
+                "letra-activa"
             );
         }
 
-        nodo.classList.add(
-            pregunta.estado
-        );
+        if (
+            pregunta.estado ===
+            "correcta"
+        ) {
+            nodo.classList.add(
+                "letra-correcta"
+            );
+        }
+
+        if (
+            pregunta.estado ===
+            "incorrecta"
+        ) {
+            nodo.classList.add(
+                "letra-incorrecta"
+            );
+        }
+
+        if (
+            pregunta.estado ===
+            "pasada"
+        ) {
+            nodo.classList.add(
+                "letra-pasada"
+            );
+        }
 
         contenedor.appendChild(
             nodo
@@ -208,6 +250,21 @@ function actualizarSesion(data) {
     SESION.definicion =
         data.definicion;
 
+    const respuestaCorrecta =
+        document.getElementById(
+            "respuesta-correcta"
+        );
+
+    if (
+        data.correcta === false &&
+        data.respuesta_correcta
+    ) {
+        respuestaCorrecta.textContent =
+            `La respuesta correcta era: ${data.respuesta_correcta}`;
+    } else {
+        respuestaCorrecta.textContent = "";
+    }
+
     actualizarPantalla();
     renderizarRosco();
 
@@ -230,9 +287,7 @@ function mostrarResultado(data) {
             "pantalla-resultado"
         );
 
-    pantalla.classList.add(
-        "visible"
-    );
+    pantalla.style.display = "flex";
 
     document.getElementById(
         "resultado-titulo"
@@ -241,8 +296,18 @@ function mostrarResultado(data) {
 
     document.getElementById(
         "resultado-puntaje"
-    ).textContent =
-        `Puntaje: ${data.puntaje}`;
+    ).innerHTML = `
+        Puntaje: ${data.puntaje}<br><br>
+        Correctas: ${data.aciertos}<br>
+        Incorrectas: ${data.errores}<br><br>
+
+        <button
+            onclick="window.location.href='/'"
+            class="btn btn-primary"
+        >
+            VOLVER AL INICIO
+        </button>
+    `;
 }
 
 function mostrarError(msg) {

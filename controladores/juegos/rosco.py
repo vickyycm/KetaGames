@@ -104,12 +104,15 @@ def responder_pregunta(
         pregunta["respuesta"]
     )
 
+    respuesta_correcta = None
+
     if correcta:
         pregunta["estado"] = "correcta"
         sesion.aciertos += 1
     else:
         pregunta["estado"] = "incorrecta"
         sesion.errores += 1
+        respuesta_correcta = pregunta["respuesta"]
 
     siguiente_letra = obtener_siguiente_letra(
         sesion.preguntas
@@ -136,6 +139,7 @@ def responder_pregunta(
 
     resultado = {
         "correcta": correcta,
+        "respuesta_correcta": respuesta_correcta,
         "estado": sesion.estado,
         "aciertos": sesion.aciertos,
         "errores": sesion.errores,

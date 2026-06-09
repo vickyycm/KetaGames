@@ -120,3 +120,10 @@ body{
 .result-score{
     font-size:28px;
 }
+
+.respuesta-correcta{
+    color:#f87171;
+    font-weight:bold;
+    min-height:24px;
+    margin:0;
+}
