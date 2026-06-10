@@ -5,7 +5,7 @@ import re
 
 genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
 
-modelo = genai.GenerativeModel("gemini-2.0-flash")
+modelo = genai.GenerativeModel("gemini-2.5-flash-lite")
 
 # wordle prompt
 def generar_palabras_wordle(tematica: str) -> dict:
