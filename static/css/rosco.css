@@ -61,9 +61,10 @@ body {
 }
 
 .letra-incorrecta {
-    background: #3a3a3c;
-    border-color: #3a3a3c;
-    color: var(--color-text-secondary, #94a3b8);
+    background: #ef4444;
+    border-color: #ef4444;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 .letra-pasada {
