@@ -29,7 +29,7 @@ def obtener_palabra_contexto(tematica: str) -> dict:
             "VOLCAN", "PIRATA", "COHETE", "DRAGON", "JUNGLA",
             "TESORO", "BRUJULA", "TIBURON", "CASTILLO", "TORMENTA",
             "ESPADA", "PLANETA", "LABERINTO", "FANTASMA", "EXPLOSION",
-            "SUBMARINO", "MONTANA", "ROBOT", "SELVA", "METEORO"
+            "SUBMARINO", "MONTAÑA", "ROBOT", "SELVA", "METEORO"
         ]
 
     palabra_elegida = random.choice(palabras_disponibles)
