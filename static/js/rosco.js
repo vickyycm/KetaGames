@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+
     inicializarRosco();
 
     document
@@ -16,15 +17,14 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     document
-        .getElementById("respuesta-input")
+        .getElementById("btn-volver-inicio")
         .addEventListener(
-            "keydown",
-            e => {
-                if (e.key === "Enter") {
-                    responderPregunta();
-                }
+            "click",
+            () => {
+                window.location.href = "/";
             }
         );
+
 });
 
 function inicializarRosco() {
@@ -296,18 +296,18 @@ function mostrarResultado(data) {
 
     document.getElementById(
         "resultado-puntaje"
-    ).innerHTML = `
-        Puntaje: ${data.puntaje}<br><br>
-        Correctas: ${data.aciertos}<br>
-        Incorrectas: ${data.errores}<br><br>
+    ).textContent =
+        `Puntaje: ${data.puntaje}`;
 
-        <button
-            onclick="window.location.href='/'"
-            class="btn btn-primary"
-        >
-            VOLVER AL INICIO
-        </button>
-    `;
+    document.getElementById(
+        "resultado-correctas"
+    ).textContent =
+        `Correctas: ${data.aciertos}`;
+
+    document.getElementById(
+        "resultado-incorrectas"
+    ).textContent =
+        `Incorrectas: ${data.errores}`;
 }
 
 function mostrarError(msg) {
