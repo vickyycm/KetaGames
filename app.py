@@ -33,6 +33,17 @@ def registro():
     """Página de registro"""
     return render_template('auth/registro.html')
 
+@app.route('/sobre-nosotros')
+def sobre_nosotros():
+    return render_template('sobre_nosotros.html') 
+
+@app.route('/privacidad')
+def privacidad():
+    return render_template('privacidad.html')
+
+@app.route('/contacto')
+def contacto():
+    return render_template('contacto.html')
 
 @app.errorhandler(404)
 def not_found(error):
