@@ -99,6 +99,7 @@ async function confirmarIntento() {
 
     if (data.error) {
       mostrarError(data.error);
+      sacudirFila(ESTADO.filaActual);
       return;
     }
 
@@ -177,22 +178,13 @@ function mostrarResultado(data) {
   document.getElementById("resultado-puntaje").textContent = gano
     ? `Puntuación: ${data.puntaje} pts` : "";
 
-  if (!USUARIO_LOGUEADO) {
-    if (!document.getElementById("aviso-invitado")) {
-      const aviso = document.createElement("div");
-      aviso.id = "aviso-invitado";
-      aviso.className = "metric-card aviso-invitado-box"; 
-      
-      aviso.innerHTML = `
-        <h3 class="metric-card-title">MODO INVITADO</h3>
-        <p class="result-word aviso-separador">Los puntos de esta partida no se guardaron en el sistema.</p>
-        <a href="/auth/login" class="navbar-btn">
-          Iniciar Sesión
-        </a>
-      `;
-      
-      const botonJugar = pantalla.querySelector("button");
-      pantalla.insertBefore(aviso, botonJugar);
+  const bloqueInvitadoHtml = document.getElementById("bloque-invitado");
+  
+  if (bloqueInvitadoHtml) {
+    if (USUARIO_LOGUEADO) {
+      bloqueInvitadoHtml.style.display = "none"; 
+    } else {
+      bloqueInvitadoHtml.style.display = "block"; 
     }
   }
 }

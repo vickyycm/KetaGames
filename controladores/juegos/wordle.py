@@ -1,4 +1,7 @@
 from datetime import datetime
+import json
+import os
+import random
 from db.firebase import db
 from servicios.ia_servicio import generar_palabras_wordle
 from servicios.wordle_servicio import (
@@ -9,7 +12,20 @@ from servicios.wordle_servicio import (
     MAX_INTENTOS
 )
 from modelos.juegos.wordle import SesionWordle
-import random
+
+DICCIONARIO_PALABRAS = set()
+
+try:
+    ruta_diccionario = os.path.join(os.path.dirname(__file__), '../../diccionario_es.json')
+    ruta_diccionario = os.path.abspath(ruta_diccionario)
+    
+    if os.path.exists(ruta_diccionario):
+        with open(ruta_diccionario, 'r', encoding='utf-8') as f:
+            palabras_json = json.load(f)
+            DICCIONARIO_PALABRAS = {p.upper().strip() for p in palabras_json}
+except Exception as e:
+    print(f"Error al cargar el diccionario de palabras: {str(e)}")
+
 
 def obtener_palabra_de_tematica(tematica: str) -> dict:
     tematica_id = tematica.lower().strip()
@@ -25,12 +41,6 @@ def obtener_palabra_de_tematica(tematica: str) -> dict:
         pistas = data.get("pistas", {})
         
     if not palabras_disponibles:
-        # try:
-        #     resultado_ia = generar_palabras_wordle(tematica)
-        #     palabras_disponibles = resultado_ia["palabras"]
-        #     pistas = resultado_ia["pistas"]
-        # except Exception as e:
-        #     return {"error": f"No se pudo generar palabras: {str(e)}"}
         
         resultado_ia_batch = {
             "palabras": ["GATOS", "PERRO", "CASAS", "ARBOL", "PLAZA"],
@@ -98,6 +108,9 @@ def enviar_intento(id_sesion: str, intento: str) -> dict:
     if not intento_valido(intento):
         return {"error": "El intento debe tener exactamente 5 letras"}
 
+    if DICCIONARIO_PALABRAS and (intento not in DICCIONARIO_PALABRAS):
+        return {"error": f"La palabra '{intento}' no es válida en el diccionario"}
+
     evaluacion = evaluar_intento(sesion.palabra, intento)
     gano = es_ganador(evaluacion)
 
@@ -117,7 +130,7 @@ def enviar_intento(id_sesion: str, intento: str) -> dict:
     ref_doc.update(sesion.to_dict())
 
     respuesta = {
-        "evaluacion": evaluacion,
+        "evaluacion": evaluation if 'evaluation' in locals() else evaluacion, 
         "intentos_usados": intentos_usados,
         "max_intentos": MAX_INTENTOS,
         "estado": sesion.estado,
