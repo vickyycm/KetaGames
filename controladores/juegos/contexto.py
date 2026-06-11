@@ -1,5 +1,6 @@
 from datetime import datetime
 from db.firebase import db
+from servicios.ia_servicio import generar_palabras_contexto
 from modelos.juegos.contexto import SesionContexto
 from servicios.contexto_servicio import calcular_similitud, validar_palabra
 from controladores.juegos.wordle import obtener_palabra_de_tematica
@@ -19,11 +20,17 @@ def obtener_palabra_contexto(tematica: str) -> dict:
         palabras_disponibles = doc.to_dict().get("palabras", [])
 
     if not palabras_disponibles:
+        try:
+             resultado = generar_palabras_contexto(tematica)
+             palabras_disponibles = resultado["palabras"]
+        except Exception as e:
+            return {"error": f"No se pudo generar palabras: {str(e)}"}
+
         palabras_disponibles = [
-            "FAMILIA", "HOGAR", "TECHO", "PUERTA", "COCINA",
-            "JARDIN", "PATIO", "CUARTO", "SALON", "MUEBLE",
-            "CAMA", "MESA", "SILLA", "VENTANA", "PARED",
-            "SUELO", "BALCON", "TECHO", "ARMARIO", "PASILLO"
+            "VOLCAN", "PIRATA", "COHETE", "DRAGON", "JUNGLA",
+            "TESORO", "BRUJULA", "TIBURON", "CASTILLO", "TORMENTA",
+            "ESPADA", "PLANETA", "LABERINTO", "FANTASMA", "EXPLOSION",
+            "SUBMARINO", "MONTAÑA", "ROBOT", "SELVA", "METEORO"
         ]
 
     palabra_elegida = random.choice(palabras_disponibles)

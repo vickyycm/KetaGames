@@ -106,6 +106,10 @@ def enviar_intento(id_sesion: str, intento: str) -> dict:
 
     if not intento_valido(intento):
         return {"error": "El intento debe tener exactamente 5 letras"}
+    
+    if DICCIONARIO_PALABRAS and (intento not in DICCIONARIO_PALABRAS):
+        return {"error": f"La palabra '{intento}' no es válida en el diccionario"}
+
 
     evaluacion = evaluar_intento(sesion.palabra, intento)
     gano = es_ganador(evaluacion)
@@ -138,7 +142,7 @@ def enviar_intento(id_sesion: str, intento: str) -> dict:
     ref_doc.update(sesion.to_dict())
 
     respuesta = {
-        "evaluacion": evaluacion,
+        "evaluacion": evaluacion, 
         "intentos_usados": intentos_usados,
         "max_intentos": MAX_INTENTOS,
         "estado": sesion.estado,

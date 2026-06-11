@@ -123,7 +123,6 @@
         <h2 class="result-title" id="resultado-titulo"></h2>
         <p class="result-word" id="resultado-palabra"></p>
         <p class="result-score" id="resultado-puntaje"></p>
-        <p id="resultado-palabra-secreta" class="result-word" style="display:none;"></p>
         {% set url_juego = url_for('juegos.seleccionar_tematica', juego='contexto') %}
         <button class="btn btn-primary" onclick="window.location.href='{{ url_juego }}'">
             Jugar de nuevo
