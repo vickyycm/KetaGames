@@ -1,6 +1,7 @@
-from flask import Blueprint, request, session, redirect, url_for, jsonify
+from flask import Blueprint, request, session, redirect, url_for, jsonify, render_template
 from servicios.auth_servicio import verificar_token, crear_o_actualizar_usuario
 from functools import wraps
+from db.firebase import db
 
 auth_bp = Blueprint("auth_bp", __name__)
 
@@ -45,3 +46,22 @@ def me():
         "nombre": session["nombre"],
         "email": session["email"]
     })
+    
+@auth_bp.route("/perfil")
+@requiere_login
+def perfil():
+
+    uid = session["uid"]
+
+    doc = db.collection(
+        "usuarios"
+    ).document(
+        uid
+    ).get()
+
+    usuario = doc.to_dict()
+
+    return render_template(
+        "usuario/perfil.html",
+        usuario=usuario
+    )

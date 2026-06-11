@@ -384,3 +384,34 @@ body {
         font-size: 1.8rem;
     }
 }
+
+.game-banner {
+    background: linear-gradient(135deg, var(--color-dark-card) 0%, var(--color-dark-card-alt) 100%);
+    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.game-banner-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--color-text-white);
+}
+
+.game-banner-score {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+}
+
+#score-valor {
+    color: var(--color-accent-yellow);
+    font-weight: 700;
+    font-size: 1.3rem;
+}

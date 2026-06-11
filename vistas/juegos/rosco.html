@@ -13,9 +13,44 @@
 <body>
 
     <nav class="navbar">
-        <a href="{{ url_for('index') }}" class="navbar-logo">KETAGAMES</a>
-        <a href="{{ url_for('login') }}" class="navbar-btn">Ingresá</a>
-    </nav>
+
+    <a href="{{ url_for('index') }}" class="navbar-logo">
+        KETAGAMES
+    </a>
+
+    {% if usuario_logueado %}
+        <div style="display:flex; align-items:center; gap:1rem;">
+
+    <a
+        href="{{ url_for('auth_bp.perfil') }}"
+        style="
+            color:var(--color-text-secondary);
+            font-size:0.9rem;
+            text-decoration:none;
+            font-weight:600;
+        "
+    >
+        {{ usuario_nombre }}
+    </a>
+
+    <a
+        href="{{ url_for('auth_bp.logout') }}"
+        class="navbar-btn"
+    >
+        Salir
+    </a>
+
+</div>
+    {% else %}
+        <a
+            href="{{ url_for('login') }}?next={{ request.full_path | urlencode }}"
+            class="navbar-btn"
+        >
+            Ingresá
+        </a>
+    {% endif %}
+
+</nav>
 
     <section class="game-banner">
         <h1 class="game-banner-title">JUEGO / ROSCO</h1>

@@ -10,10 +10,32 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     document
+    .getElementById("respuesta-input")
+    .addEventListener(
+        "input",
+        () => {
+            document.getElementById(
+                "error-juego"
+            ).textContent = "";
+        }
+    );
+
+    document
         .getElementById("btn-pasar")
         .addEventListener(
             "click",
             pasarPregunta
+        );
+
+    document
+        .getElementById("respuesta-input")
+        .addEventListener(
+            "keydown",
+            e => {
+                if (e.key === "Enter") {
+                    responderPregunta();
+                }
+            }
         );
 
     document
@@ -158,11 +180,18 @@ async function responderPregunta() {
         ).value.trim();
 
     if (!respuesta) {
-        mostrarError(
-            "Ingresá una respuesta"
-        );
-        return;
-    }
+    mostrarError(
+        "Ingresá una respuesta"
+    );
+
+    setTimeout(() => {
+        document.getElementById(
+            "error-juego"
+        ).textContent = "";
+    }, 3000);
+
+    return;
+}
 
     const res = await fetch(
         "/juegos/rosco/responder",

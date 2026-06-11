@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from db.firebase import db
 from modelos.juegos.rosco import SesionRosco
 from servicios.rosco_servicio import (
@@ -7,12 +6,12 @@ from servicios.rosco_servicio import (
     obtener_siguiente_letra,
     calcular_puntaje
 )
+from servicios.auth_servicio import actualizar_estadisticas_usuario
 
 
 def iniciar_partida(id_usuario: str, tematica: str) -> dict:
 
     preguntas = generar_preguntas_demo()
-
     id_sesion = f"rosco_{id_usuario}_{int(datetime.utcnow().timestamp())}"
 
     sesion = SesionRosco(
@@ -21,13 +20,7 @@ def iniciar_partida(id_usuario: str, tematica: str) -> dict:
         preguntas=preguntas
     )
 
-    db.collection(
-        "partidas_rosco"
-    ).document(
-        id_sesion
-    ).set(
-        sesion.to_dict()
-    )
+    db.collection("partidas_rosco").document(id_sesion).set(sesion.to_dict())
 
     return {
         "id_sesion": id_sesion,
@@ -39,18 +32,12 @@ def iniciar_partida(id_usuario: str, tematica: str) -> dict:
 
 def obtener_sesion(id_sesion: str) -> dict:
 
-    doc = db.collection(
-        "partidas_rosco"
-    ).document(
-        id_sesion
-    ).get()
+    doc = db.collection("partidas_rosco").document(id_sesion).get()
 
     if not doc.exists:
         return {"error": "Sesión no encontrada"}
 
-    sesion = SesionRosco.from_dict(
-        doc.to_dict()
-    )
+    sesion = SesionRosco.from_dict(doc.to_dict())
 
     data = {
         "id_sesion": id_sesion,
@@ -64,46 +51,26 @@ def obtener_sesion(id_sesion: str) -> dict:
     }
 
     if sesion.letra_actual:
-        data["definicion"] = (
-            sesion.preguntas[
-                sesion.letra_actual
-            ]["definicion"]
-        )
+        data["definicion"] = sesion.preguntas[sesion.letra_actual]["definicion"]
 
     return data
 
 
-def responder_pregunta(
-    id_sesion: str,
-    letra: str,
-    respuesta: str
-) -> dict:
+def responder_pregunta(id_sesion: str, letra: str, respuesta: str) -> dict:
 
-    doc = db.collection(
-        "partidas_rosco"
-    ).document(
-        id_sesion
-    ).get()
+    doc = db.collection("partidas_rosco").document(id_sesion).get()
 
     if not doc.exists:
         return {"error": "Sesión no encontrada"}
 
-    sesion = SesionRosco.from_dict(
-        doc.to_dict()
-    )
+    sesion = SesionRosco.from_dict(doc.to_dict())
 
     if sesion.estado != "jugando":
         return {"error": "La partida ya terminó"}
 
     pregunta = sesion.preguntas[letra]
-
     respuesta = respuesta.upper().strip()
-
-    correcta = (
-        respuesta ==
-        pregunta["respuesta"]
-    )
-
+    correcta = respuesta == pregunta["respuesta"]
     respuesta_correcta = None
 
     if correcta:
@@ -114,28 +81,24 @@ def responder_pregunta(
         sesion.errores += 1
         respuesta_correcta = pregunta["respuesta"]
 
-    siguiente_letra = obtener_siguiente_letra(
-        sesion.preguntas
-    )
-
+    siguiente_letra = obtener_siguiente_letra(sesion.preguntas)
     sesion.letra_actual = siguiente_letra
 
     if siguiente_letra is None:
         sesion.estado = "finalizada"
-        sesion.puntaje = calcular_puntaje(
-            sesion.aciertos
-        )
-        sesion.finalizada_en = (
-            datetime.utcnow().isoformat()
-        )
+        sesion.puntaje = calcular_puntaje(sesion.aciertos)
+        sesion.finalizada_en = datetime.utcnow().isoformat()
 
-    db.collection(
-        "partidas_rosco"
-    ).document(
-        id_sesion
-    ).set(
-        sesion.to_dict()
-    )
+        if sesion.id_usuario != "invitado":
+            gano = sesion.aciertos == len(sesion.preguntas)
+            actualizar_estadisticas_usuario(
+                sesion.id_usuario,
+                "rosco",
+                sesion.puntaje,
+                gano=gano
+            )
+
+    db.collection("partidas_rosco").document(id_sesion).set(sesion.to_dict())
 
     resultado = {
         "correcta": correcta,
@@ -149,60 +112,42 @@ def responder_pregunta(
 
     if siguiente_letra:
         resultado["letra_actual"] = siguiente_letra
-        resultado["definicion"] = (
-            sesion.preguntas[
-                siguiente_letra
-            ]["definicion"]
-        )
+        resultado["definicion"] = sesion.preguntas[siguiente_letra]["definicion"]
 
     return resultado
 
 
-def pasar_pregunta(
-    id_sesion: str,
-    letra: str
-) -> dict:
+def pasar_pregunta(id_sesion: str, letra: str) -> dict:
 
-    doc = db.collection(
-        "partidas_rosco"
-    ).document(
-        id_sesion
-    ).get()
+    doc = db.collection("partidas_rosco").document(id_sesion).get()
 
     if not doc.exists:
         return {"error": "Sesión no encontrada"}
 
-    sesion = SesionRosco.from_dict(
-        doc.to_dict()
-    )
+    sesion = SesionRosco.from_dict(doc.to_dict())
 
     if sesion.estado != "jugando":
         return {"error": "La partida ya terminó"}
 
     sesion.preguntas[letra]["estado"] = "pasada"
-
-    siguiente_letra = obtener_siguiente_letra(
-        sesion.preguntas
-    )
-
+    siguiente_letra = obtener_siguiente_letra(sesion.preguntas)
     sesion.letra_actual = siguiente_letra
 
     if siguiente_letra is None:
         sesion.estado = "finalizada"
-        sesion.puntaje = calcular_puntaje(
-            sesion.aciertos
-        )
-        sesion.finalizada_en = (
-            datetime.utcnow().isoformat()
-        )
+        sesion.puntaje = calcular_puntaje(sesion.aciertos)
+        sesion.finalizada_en = datetime.utcnow().isoformat()
 
-    db.collection(
-        "partidas_rosco"
-    ).document(
-        id_sesion
-    ).set(
-        sesion.to_dict()
-    )
+        if sesion.id_usuario != "invitado":
+            gano = sesion.aciertos == len(sesion.preguntas)
+            actualizar_estadisticas_usuario(
+                sesion.id_usuario,
+                "rosco",
+                sesion.puntaje,
+                gano=gano
+            )
+
+    db.collection("partidas_rosco").document(id_sesion).set(sesion.to_dict())
 
     resultado = {
         "estado": sesion.estado,
@@ -214,10 +159,6 @@ def pasar_pregunta(
 
     if siguiente_letra:
         resultado["letra_actual"] = siguiente_letra
-        resultado["definicion"] = (
-            sesion.preguntas[
-                siguiente_letra
-            ]["definicion"]
-        )
+        resultado["definicion"] = sesion.preguntas[siguiente_letra]["definicion"]
 
     return resultado

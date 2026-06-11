@@ -3,6 +3,7 @@ from db.firebase import db
 from modelos.juegos.contexto import SesionContexto
 from servicios.contexto_servicio import calcular_similitud, validar_palabra
 from controladores.juegos.wordle import obtener_palabra_de_tematica
+from servicios.auth_servicio import actualizar_estadisticas_usuario
 import random
 
 MAX_INTENTOS = 100
@@ -18,12 +19,6 @@ def obtener_palabra_contexto(tematica: str) -> dict:
         palabras_disponibles = doc.to_dict().get("palabras", [])
 
     if not palabras_disponibles:
-        # try:
-        #     resultado = generar_palabras_contexto(tematica)
-        #     palabras_disponibles = resultado["palabras"]
-        # except Exception as e:
-        #     return {"error": f"No se pudo generar palabras: {str(e)}"}
-
         palabras_disponibles = [
             "FAMILIA", "HOGAR", "TECHO", "PUERTA", "COCINA",
             "JARDIN", "PATIO", "CUARTO", "SALON", "MUEBLE",
@@ -40,6 +35,7 @@ def obtener_palabra_contexto(tematica: str) -> dict:
     }, merge=True)
 
     return {"palabra": palabra_elegida}
+
 
 def iniciar_partida(id_usuario: str, tematica: str) -> dict:
     resultado = obtener_palabra_contexto(tematica)
@@ -105,6 +101,14 @@ def enviar_intento(id_sesion: str, intento: str) -> dict:
         sesion.estado = "perdida"
         sesion.finalizada_en = datetime.utcnow().isoformat()
 
+    if sesion.estado != "jugando" and sesion.id_usuario != "invitado":
+        actualizar_estadisticas_usuario(
+            sesion.id_usuario,
+            "contexto",
+            sesion.puntaje,
+            gano=gano
+        )
+
     ref.update(sesion.to_dict())
 
     intentos_ordenados = sorted(sesion.intentos, key=lambda x: x["similitud"])
@@ -135,6 +139,14 @@ def rendirse(id_sesion: str) -> dict:
 
     sesion.estado = "rendida"
     sesion.finalizada_en = datetime.utcnow().isoformat()
+
+    if sesion.id_usuario != "invitado":
+        actualizar_estadisticas_usuario(
+            sesion.id_usuario,
+            "contexto",
+            0,
+            gano=False
+        )
 
     ref.update(sesion.to_dict())
 

@@ -55,7 +55,7 @@ def wordle_jugar():
     if "error" in estado:
         return redirect(url_for("juegos.seleccionar_tematica", juego="palabra_del_dia"))
 
-    usuario_logueado = "id_usuario" in session and session["id_usuario"] != "invitado"
+    usuario_logueado = "uid" in session and session["uid"] != "invitado"
     usuario_nombre = session.get("nombre", "Invitado")
 
     return render_template(
@@ -68,7 +68,7 @@ def wordle_jugar():
 @juegos_bp.route("/juegos/wordle/iniciar", methods=["POST"])
 def wordle_iniciar():
     
-    id_usuario = session.get("id_usuario", "invitado")
+    id_usuario = session.get("uid", "invitado")
 
     data = request.get_json()
     tematica = data.get("tematica", "").strip()
@@ -197,16 +197,21 @@ def rosco_jugar():
     if "error" in estado:
         return redirect(url_for("juegos.seleccionar_tematica", juego="rosco"))
 
+    usuario_logueado = "uid" in session and session["uid"] != "invitado"
+    usuario_nombre = session.get("nombre", "Invitado")
+
     return render_template(
         "juegos/rosco.html",
-        sesion=estado
-    )
+        sesion=estado,
+        usuario_logueado=usuario_logueado,
+        usuario_nombre=usuario_nombre
+)
 
 
 @juegos_bp.route("/juegos/rosco/iniciar", methods=["POST"])
 def rosco_iniciar():
 
-    id_usuario = session.get("id_usuario", "invitado")
+    id_usuario = session.get("uid", "invitado")
 
     data = request.get_json()
     tematica = data.get("tematica", "").strip()
