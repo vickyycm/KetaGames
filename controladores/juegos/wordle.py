@@ -1,5 +1,8 @@
 from servicios.auth_servicio import actualizar_estadisticas_usuario
 from datetime import datetime
+import json
+import os
+import random
 from db.firebase import db
 from servicios.ia_servicio import generar_palabras_wordle
 from servicios.wordle_servicio import (
@@ -10,9 +13,22 @@ from servicios.wordle_servicio import (
     MAX_INTENTOS
 )
 from modelos.juegos.wordle import SesionWordle
-import random
+
+DICCIONARIO_PALABRAS = set()
+
+try:
+    ruta_diccionario = os.path.join(os.path.dirname(__file__), '../../diccionario_es.json')
+    ruta_diccionario = os.path.abspath(ruta_diccionario)
+    
+    if os.path.exists(ruta_diccionario):
+        with open(ruta_diccionario, 'r', encoding='utf-8') as f:
+            palabras_json = json.load(f)
+            DICCIONARIO_PALABRAS = {p.upper().strip() for p in palabras_json}
+except Exception as e:
+    print(f"Error al cargar el diccionario de palabras: {str(e)}")
 
 def obtener_palabra_de_tematica(tematica: str) -> dict:
+    
     tematica_id = tematica.lower().strip()
     ref_tematica = db.collection("tematicas_palabras").document(tematica_id)
     doc = ref_tematica.get()
