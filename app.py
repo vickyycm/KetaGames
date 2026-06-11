@@ -43,11 +43,6 @@ def not_found(error):
 def internal_error(error):
     return render_template('500.html'), 500
 
-@app.route('/registro')
-def registro():
-    """Página de registro"""
-    return render_template('auth/registro.html')
-
 @app.route('/sobre-nosotros')
 def sobre_nosotros():
     return render_template('sobre_nosotros.html')
