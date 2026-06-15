@@ -202,7 +202,9 @@
     </footer>
 
     <script>
-        const SESION = {{ sesion | tojson }};
+        const datosSesionTexto = '{{ sesion | tojson if sesion else "{}" }}';
+        const SESION = JSON.parse(datosSesionTexto);
+        const USUARIO_LOGUEADO = "{{ 'true' if usuario_logueado else 'false' }}" === "true";
     </script>
 
     <script src="{{ url_for('static', filename='js/rosco.js') }}"></script>
