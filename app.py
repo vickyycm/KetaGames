@@ -13,9 +13,17 @@ app.register_blueprint(admin_bp)
 
 @app.context_processor
 def inject_usuario():
+    from db.firebase import db
+    es_admin = False
+    uid = session.get("uid")
+    if uid and uid != "invitado":
+        doc = db.collection("usuarios").document(uid).get()
+        if doc.exists:
+            es_admin = doc.to_dict().get("rol") == "admin"
     return {
         "usuario_logueado": "uid" in session,
-        "usuario_nombre": session.get("nombre", "")
+        "usuario_nombre": session.get("nombre", ""),
+        "es_admin": es_admin
     }
 
 @app.route('/')
