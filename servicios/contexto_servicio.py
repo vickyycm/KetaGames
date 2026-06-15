@@ -24,5 +24,5 @@ def calcular_similitud(palabra_secreta: str, intento: str) -> int:
     emb_intento = _modelo.encode(intento, convert_to_tensor=True)
     coseno = util.cos_sim(emb_secreta, emb_intento).item()
 
-    score = round(1 + (1 - coseno) * 49.5)
+    score = round(1 + (1 - coseno) ** 0.7 * 99)
     return max(1, min(100, score))

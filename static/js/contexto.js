@@ -45,13 +45,19 @@ async function confirmarIntento() {
         input.value = "";
         input.focus();
 
-        renderizarListaCompleta(data.intentos_ordenados);
+
         actualizarMetricas(data.cantidad_intentos);
         document.getElementById("score-valor").textContent = data.puntaje;
 
-        if (data.estado === "ganada" || data.estado === "perdida" || data.estado === "rendida") {
+                if (data.estado === "ganada") {
             ESTADO.juegoTerminado = true;
-            setTimeout(() => mostrarResultado(data), 800);
+                        setTimeout(() => mostrarResultado(data), 400);
+        } else {
+            renderizarListaCompleta(data.intentos_ordenados);
+            if (data.estado === "perdida") {
+                ESTADO.juegoTerminado = true;
+                setTimeout(() => mostrarResultado(data), 800);
+            }
         }
 
     } catch(err) {
@@ -150,16 +156,8 @@ function mostrarResultado(data) {
 
     document.getElementById("resultado-titulo").textContent = gano ? "¡Ganaste!" : rendido ? "Te rendiste" : "¡Perdiste!";
     document.getElementById("resultado-palabra").textContent = gano
-        ? "¡Adivinaste la palabra!"
-        : `La palabra era: ${data.palabra}`;
-    document.getElementById("resultado-puntaje").textContent = gano
-        ? `Puntuación: ${data.puntaje} pts` : "";
-
-    if (data.palabra) {
-    const el = document.getElementById("resultado-palabra-secreta");
-    el.textContent = `Palabra: ${data.palabra.toUpperCase()}`;
-    el.style.display = "block";
-}
+         ? `¡Adivinaste la palabra! Era: ${data.palabra.toUpperCase()}`
+    : `La palabra era: ${data.palabra.toUpperCase()}`;
 
 
     if (!USUARIO_LOGUEADO) {

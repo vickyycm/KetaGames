@@ -471,3 +471,20 @@
     gap: 1rem;
     padding: 3rem 2rem;
 }
+
+@media (max-width: 1200px) {
+    .scores-grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .scores-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* el email largo no rompe el layout */
+    .metric-value {
+        word-break: break-all;
+    }
+}

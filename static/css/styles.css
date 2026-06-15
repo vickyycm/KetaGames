@@ -240,8 +240,7 @@ body {
     margin: 0 auto;
     line-height: 1.8;
     letter-spacing: 0.5px;
-    white-space: nowrap;
-    overflow-x: auto;
+    white-space: normal;    
 }
 
 .intro-text .intro-highlight {

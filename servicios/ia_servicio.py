@@ -15,7 +15,7 @@ Eres un generador de palabras para un juego tipo Wordle en español.
 El usuario eligió la temática: "{tematica}"
 
 Tu tarea:
-1. Generar exactamente 20 palabras en español de EXACTAMENTE 5 letras, relacionadas con esa temática.
+1. Generar exactamente 5 palabras en español de EXACTAMENTE 5 letras, relacionadas con esa temática.
 2. Cada palabra debe ser un sustantivo común, sin tildes, sin la letra Ñ.
 3. Para cada palabra incluir una pista breve que ayude a adivinarla sin revelarla.
 4. Devolver SOLO un JSON con este formato exacto, sin explicaciones ni markdown:
@@ -52,14 +52,14 @@ Eres un generador de palabras para un juego de asociación semántica en españo
 El usuario eligió la temática: "{tematica}"
 
 Tu tarea:
-1. Generar exactamente 20 palabras en español relacionadas con esa temática.
+1. Generar exactamente 5 palabras en español relacionadas con esa temática.
 2. Cada palabra debe ser un sustantivo común, sin tildes, sin la letra Ñ, de mínimo 4 letras.
 3. Las palabras deben tener distintos niveles de relación con la temática — algunas muy obvias, otras más indirectas.
 4. Devolver SOLO un JSON con este formato exacto, sin explicaciones ni markdown:
 {{"palabras": ["PALABRA1", "PALABRA2", ...]}}
 
 Ejemplos válidos:
-- Temática "Fútbol" → {{"palabras": ["GOLES", "BALON", "ARCO", "CANCHA", "ARBITRO", "FALTA", "PENAL", "TIRO", "PASE", "DEFENSA", "ATAQUE", "CENTRO", "BANCO", "HINCHA", "COPA", "LIGA", "CLUB", "ESTADIO", "TORNEO", "CAPITAN"]}}
+- Temática "Fútbol" → {{"palabras": ["GOLES", "BALON", "ARCO", "CANCHA", "ARBITRO"]}}
 
 Responde solo con el JSON.
 """
