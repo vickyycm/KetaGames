@@ -415,3 +415,18 @@ body {
     font-weight: 700;
     font-size: 1.3rem;
 }
+
+.rosco-board-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.rosco-input-area {
+    width: 100%;
+    max-width: 650px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}

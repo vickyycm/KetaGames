@@ -127,7 +127,9 @@
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id_token: idToken })
             });
-            return await res.json();
+            const data = await res.json();
+            data._status = res.status;
+            return data;
         } catch (e) {
             return { ok: false, error: "Error de conexión con el servidor backend." };
         }
@@ -159,6 +161,9 @@
                 const params = new URLSearchParams(window.location.search);
                 const next = params.get("next");
                 window.location.href = next || "/";
+            } else if (data._status === 403) {
+                errorDiv.textContent = data.error;
+                errorDiv.classList.add("visible");
             } else {
                 throw new Error(data.error || "Error en la sesión del servidor.");
             }
@@ -199,6 +204,9 @@
                 const params = new URLSearchParams(window.location.search);
                 const next = params.get("next");
                 window.location.href = next || "/";
+            } else if (data._status === 403) {
+                errorDiv.textContent = data.error;
+                errorDiv.classList.add("visible");
             } else {
                 throw new Error(data.error || "Error al iniciar sesión");
             }

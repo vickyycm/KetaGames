@@ -63,103 +63,56 @@
 
     <main class="rosco-container">
 
-        <section class="rosco-board-section">
+    <section class="rosco-board-section">
+        <div class="rosco-board-wrapper">
+            <div id="rosco" class="rosco-board"></div>
 
-            <div id="rosco" class="rosco-board">
-
-            </div>
-
-        </section>
-
-        <aside class="rosco-panel">
-
-            <div class="metric-card">
-
-                <h3 class="metric-card-title">
-                    TEMÁTICA
-                </h3>
-
-                <div id="tematica-actual">
-                </div>
-
-            </div>
-
-            <div class="metric-card">
-
-                <h3 class="metric-card-title">
-                    LETRA ACTUAL
-                </h3>
-
-                <div id="letra-actual">
-                </div>
-
-            </div>
-
-            <div class="metric-card">
-
-                <h3 class="metric-card-title">
-                    PREGUNTA
-                </h3>
-
-                <p id="pregunta-actual">
-                </p>
-
-            </div>
-
-            <input
-                type="text"
-                id="respuesta-input"
-                autocomplete="off"
-                placeholder="Ingresá tu respuesta"
-            >
-
-            <p id="error-juego" class="error-message"></p>
-
-            <p id="respuesta-correcta" class="respuesta-correcta"></p>
-
-            <div class="rosco-actions">
-
-                <button
-                    class="btn btn-primary"
-                    id="btn-responder"
+            <div class="rosco-input-area">
+                <input
+                    type="text"
+                    id="respuesta-input"
+                    autocomplete="off"
+                    placeholder="Ingresá tu respuesta"
                 >
-                    RESPONDER
-                </button>
-
-                <button
-                    class="btn btn-outline"
-                    id="btn-pasar"
-                >
-                    PASAPALABRA
-                </button>
-
-            </div>
-
-            <div class="metric-card">
-
-                <h3 class="metric-card-title">
-                    ESTADÍSTICAS
-                </h3>
-
-                <div class="metrics-list">
-
-                    <div class="metric-item">
-                        <span>Correctas</span>
-                        <span id="correctas">0</span>
-                    </div>
-
-                    <div class="metric-item">
-                        <span>Incorrectas</span>
-                        <span id="incorrectas">0</span>
-                    </div>
-
+                <p id="error-juego" class="error-message"></p>
+                <p id="respuesta-correcta" class="respuesta-correcta"></p>
+                <div class="rosco-actions">
+                    <button class="btn btn-primary" id="btn-responder">RESPONDER</button>
+                    <button class="btn btn-outline" id="btn-pasar">PASAPALABRA</button>
                 </div>
-
             </div>
+        </div>
+    </section>
 
-        </aside>
+    <aside class="rosco-panel">
+        <div class="metric-card">
+            <h3 class="metric-card-title">TEMÁTICA</h3>
+            <div id="tematica-actual"></div>
+        </div>
+        <div class="metric-card">
+            <h3 class="metric-card-title">LETRA ACTUAL</h3>
+            <div id="letra-actual"></div>
+        </div>
+        <div class="metric-card">
+            <h3 class="metric-card-title">PREGUNTA</h3>
+            <p id="pregunta-actual"></p>
+        </div>
+        <div class="metric-card">
+            <h3 class="metric-card-title">ESTADÍSTICAS</h3>
+            <div class="metrics-list">
+                <div class="metric-item">
+                    <span>Correctas</span>
+                    <span id="correctas">0</span>
+                </div>
+                <div class="metric-item">
+                    <span>Incorrectas</span>
+                    <span id="incorrectas">0</span>
+                </div>
+            </div>
+        </div>
+    </aside>
 
-    </main>
+</main>
 
     <div id="pantalla-resultado" class="result-screen">
 

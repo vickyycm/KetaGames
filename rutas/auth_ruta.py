@@ -1,4 +1,5 @@
 from flask import Blueprint, request, session, redirect, url_for, jsonify, render_template
+from modelos import usuario
 from servicios.auth_servicio import verificar_token, crear_o_actualizar_usuario
 from functools import wraps
 from db.firebase import db
@@ -26,6 +27,11 @@ def google_callback():
         return jsonify({"error": "Token inválido"}), 401
 
     usuario = crear_o_actualizar_usuario(decoded)
+
+    if not usuario.get("activo", True):
+        return jsonify({"error": "Tu cuenta está suspendida."}), 403
+
+    session["uid"] = usuario["uid"]
 
     session["uid"] = usuario["uid"]
     session["nombre"] = usuario["nombre"]

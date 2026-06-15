@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios - KetaGames Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="{{ url_for('index') }}" class="navbar-logo">KETAGAMES</a>
+        <div style="display:flex; align-items:center; gap:1rem;">
+            <span style="color:var(--color-text-secondary); font-size:0.9rem; font-weight:600;">
+                {{ usuario_nombre }}
+            </span>
+            <a href="{{ url_for('auth_bp.logout') }}" class="navbar-btn">Salir</a>
+        </div>
+    </nav>
+
+    <section class="game-banner" style="background: linear-gradient(135deg, var(--color-dark-card) 0%, var(--color-dark-card-alt) 100%); border-bottom: 1px solid rgba(168, 85, 247, 0.2); padding: 2rem; display: flex; justify-content: space-between; align-items: center;">
+        <h1 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 2px; color: var(--color-text-white); margin: 0;">
+            USUARIOS REGISTRADOS
+        </h1>
+        <a href="{{ url_for('admin.panel') }}" class="admin-nav-link">
+            VOLVER AL PANEL
+        </a>
+    </section>
+
+    <div class="admin-container">
+
+        <div class="admin-card">
+            <h2 class="admin-section-title">GESTIÓN DE USUARIOS</h2>
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>UID</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Proveedor</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for usuario in usuarios %}
+                        <tr>
+                            <td class="uid-cell" title="{{ usuario.uid }}">{{ usuario.uid }}</td>
+                            <td>{{ usuario.nombre }}</td>
+                            <td>{{ usuario.email }}</td>
+                            <td>
+                                <span style="color: var(--color-text-secondary); font-size: 0.85rem;">
+                                    {{ usuario.proveedor }}
+                                </span>
+                            </td>
+                            <td>
+                                {% if usuario.activo %}
+                                    <span class="badge badge-active">ACTIVO</span>
+                                {% else %}
+                                    <span class="badge badge-suspended">SUSPENDIDO</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a
+                                    href="{{ url_for('admin.toggle_usuario', uid=usuario.uid) }}"
+                                    class="admin-action-btn {% if usuario.activo %}btn-suspender{% else %}btn-reactivar{% endif %}"
+                                >
+                                    {% if usuario.activo %}Suspender{% else %}Reactivar{% endif %}
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div class="footer-column footer-brand">
+            <h3 class="footer-title">KETAGAMES</h3>
+            <p class="footer-credit">© 2026 KetaGames</p>
+        </div>
+        <div class="footer-column footer-links">
+            <a href="{{ url_for('sobre_nosotros') }}" class="footer-link">Sobre Nosotros</a>
+            <a href="{{ url_for('privacidad') }}" class="footer-link">Privacidad</a>
+            <a href="{{ url_for('contacto') }}" class="footer-link">Contacto</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

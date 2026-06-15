@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - KetaGames</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="{{ url_for('index') }}" class="navbar-logo">KETAGAMES</a>
+        <div style="display:flex; align-items:center; gap:1rem;">
+            <span style="color:var(--color-text-secondary); font-size:0.9rem; font-weight:600;">
+                {{ usuario_nombre }}
+            </span>
+            <a href="{{ url_for('auth_bp.logout') }}" class="navbar-btn">Salir</a>
+        </div>
+    </nav>
+
+    <section class="game-banner" style="background: linear-gradient(135deg, var(--color-dark-card) 0%, var(--color-dark-card-alt) 100%); border-bottom: 1px solid rgba(168, 85, 247, 0.2); padding: 2rem; display: flex; justify-content: space-between; align-items: center;">
+        <h1 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 2px; color: var(--color-text-white); margin: 0;">
+            PANEL ADMINISTRADOR
+        </h1>
+        <a href="{{ url_for('admin.usuarios') }}" class="admin-nav-link">
+            GESTIONAR USUARIOS
+        </a>
+    </section>
+
+    <div class="admin-container">
+
+        <div>
+            <h2 class="admin-section-title">ESTADÍSTICAS GLOBALES</h2>
+            <div class="admin-stats-grid">
+
+                <div class="admin-stat-card">
+                    <span class="admin-stat-label">Usuarios Registrados</span>
+                    <span class="admin-stat-value">{{ total_usuarios }}</span>
+                </div>
+
+                <div class="admin-stat-card">
+                    <span class="admin-stat-label">Partidas Wordle</span>
+                    <span class="admin-stat-value">{{ total_wordle }}</span>
+                </div>
+
+                <div class="admin-stat-card">
+                    <span class="admin-stat-label">Partidas Contexto</span>
+                    <span class="admin-stat-value">{{ total_contexto }}</span>
+                </div>
+
+                <div class="admin-stat-card">
+                    <span class="admin-stat-label">Partidas Rosco</span>
+                    <span class="admin-stat-value">{{ total_rosco }}</span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <h2 class="admin-section-title">ACTIVIDAD DE USUARIOS</h2>
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Último Acceso</th>
+                            <th>Partidas</th>
+                            <th>Score Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for usuario in usuarios_stats %}
+                        <tr>
+                            <td>{{ usuario.nombre }}</td>
+                            <td>{{ usuario.email }}</td>
+                            <td>
+                                <span class="metric-value-mono">
+                                    {{ usuario.ultimo_acceso[:10] if usuario.ultimo_acceso != '-' else '-' }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="metric-value-mono">{{ usuario.partidas_totales }}</span>
+                            </td>
+                            <td>
+                                <span class="metric-value-mono">{{ usuario.score_total }} pts</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div class="footer-column footer-brand">
+            <h3 class="footer-title">KETAGAMES</h3>
+            <p class="footer-credit">© 2026 KetaGames</p>
+        </div>
+        <div class="footer-column footer-links">
+            <a href="{{ url_for('sobre_nosotros') }}" class="footer-link">Sobre Nosotros</a>
+            <a href="{{ url_for('privacidad') }}" class="footer-link">Privacidad</a>
+            <a href="{{ url_for('contacto') }}" class="footer-link">Contacto</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

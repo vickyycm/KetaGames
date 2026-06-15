@@ -1,0 +1,214 @@
+.admin-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 0.9rem;
+}
+
+.admin-table th {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: var(--color-text-secondary);
+    padding: 1rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+    background: rgba(168, 85, 247, 0.05);
+}
+
+.admin-table td {
+    padding: 1rem 1.5rem;
+    color: var(--color-text-white);
+    border-bottom: 1px solid rgba(168, 85, 247, 0.08);
+    vertical-align: middle;
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tr:hover td {
+    background: rgba(168, 85, 247, 0.05);
+}
+
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.admin-stat-card {
+    background: linear-gradient(135deg, var(--color-dark-card) 0%, var(--color-dark-card-alt) 100%);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-stat-card:hover {
+    border-color: rgba(168, 85, 247, 0.4);
+    box-shadow: 0 8px 20px rgba(168, 85, 247, 0.15);
+}
+
+.admin-stat-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: var(--color-text-secondary);
+}
+
+.admin-stat-value {
+    font-family: 'Courier New', monospace;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-accent-yellow);
+    letter-spacing: 1px;
+}
+
+.admin-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.admin-section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    color: var(--color-text-white);
+    margin: 0 0 1.2rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.admin-card {
+    background: linear-gradient(135deg, var(--color-dark-card) 0%, var(--color-dark-card-alt) 100%);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.badge-active {
+    background: rgba(83, 141, 78, 0.2);
+    color: #4ade80;
+    border: 1px solid rgba(83, 141, 78, 0.4);
+}
+
+.badge-suspended {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.admin-action-btn {
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.admin-action-btn:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+
+.btn-suspender {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.btn-reactivar {
+    background: rgba(83, 141, 78, 0.2);
+    color: #4ade80;
+    border: 1px solid rgba(83, 141, 78, 0.4);
+}
+
+.uid-cell {
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, var(--color-primary-violet) 0%, var(--color-primary-violet-bright) 100%);
+    color: #000;
+    border-radius: 8px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35);
+}
+
+.admin-nav-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.5);
+}
+
+.metric-value-mono {
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-accent-yellow);
+}
+
+@media (max-width: 1024px) {
+    .admin-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .admin-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-container {
+        padding: 1.5rem 1rem;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 0.75rem 1rem;
+    }
+}

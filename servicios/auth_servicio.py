@@ -23,10 +23,13 @@ def crear_o_actualizar_usuario(decoded_token: dict) -> dict:
         proveedor = "google"
 
     if doc.exists:
-        usuario = Usuario.from_dict(doc.to_dict())
+        datos = doc.to_dict()
+        usuario = Usuario.from_dict(datos)
         usuario.ultimo_acceso = ahora
         ref.update({"ultimo_acceso": ahora})
-        return usuario.to_dict()
+        resultado = usuario.to_dict()
+        resultado["activo"] = datos.get("activo", True)
+        return resultado
     else:
         email = decoded_token.get("email", "")
         nombre_defecto = email.split("@")[0] if email else "Usuario"

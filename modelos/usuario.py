@@ -17,6 +17,9 @@ class Usuario:
         self.foto_url = foto_url
         self.proveedor = proveedor
 
+        self.rol = "usuario"
+        self.activo = True
+
         self.creado_en = datetime.utcnow().isoformat()
         self.ultimo_acceso = datetime.utcnow().isoformat()
 
@@ -49,6 +52,8 @@ class Usuario:
             "email": self.email,
             "foto_url": self.foto_url,
             "proveedor": self.proveedor,
+            "rol": self.rol,
+            "activo": self.activo,
             "creado_en": self.creado_en,
             "ultimo_acceso": self.ultimo_acceso,
 
@@ -85,8 +90,25 @@ class Usuario:
             proveedor=data.get("proveedor", "google")
         )
 
-        u.creado_en = data.get("creado_en", u.creado_en)
-        u.ultimo_acceso = data.get("ultimo_acceso", u.ultimo_acceso)
+        u.rol = data.get(
+            "rol",
+            "usuario"
+        )
+
+        u.activo = data.get(
+            "activo",
+            True
+        )
+
+        u.creado_en = data.get(
+            "creado_en",
+            u.creado_en
+        )
+
+        u.ultimo_acceso = data.get(
+            "ultimo_acceso",
+            u.ultimo_acceso
+        )
 
         u.score_total = data.get("score_total", 0)
         u.partidas_totales = data.get("partidas_totales", 0)
