@@ -21,17 +21,20 @@ def obtener_palabra_contexto(tematica: str) -> dict:
 
     if not palabras_disponibles:
         try:
-             resultado = generar_palabras_contexto(tematica)
-             palabras_disponibles = resultado["palabras"]
+            resultado = generar_palabras_contexto(tematica)
+            palabras_disponibles = resultado["palabras"]
         except Exception as e:
-            return {"error": f"No se pudo generar palabras: {str(e)}"}
+            print(f"Advertencia: Falló Gemini API ({str(e)}). Usando palabras por defecto.")
+            
+            palabras_disponibles = [
+                "VOLCAN", "PIRATA", "COHETE", "DRAGON", "JUNGLA",
+                "TESORO", "BRUJULA", "TIBURON", "CASTILLO", "TORMENTA",
+                "ESPADA", "PLANETA", "LABERINTO", "FANTASMA", "EXPLOSION",
+                "SUBMARINO", "MONTAÑA", "ROBOT", "SELVA", "METEORO"
+            ]
 
-        palabras_disponibles = [
-            "VOLCAN", "PIRATA", "COHETE", "DRAGON", "JUNGLA",
-            "TESORO", "BRUJULA", "TIBURON", "CASTILLO", "TORMENTA",
-            "ESPADA", "PLANETA", "LABERINTO", "FANTASMA", "EXPLOSION",
-            "SUBMARINO", "MONTAÑA", "ROBOT", "SELVA", "METEORO"
-        ]
+    if not palabras_disponibles:
+        return {"error": "No hay palabras disponibles para esta temática"}
 
     palabra_elegida = random.choice(palabras_disponibles)
     palabras_disponibles.remove(palabra_elegida)
