@@ -10,39 +10,58 @@ import random
 MAX_INTENTOS = 100
 
 def obtener_palabra_contexto(tematica: str) -> dict:
-    tematica_id = tematica.lower().strip()
-    ref = db.collection("tematicas_palabras_contexto").document(tematica_id)
-    doc = ref.get()
 
-    palabras_disponibles = []
+    tematica = tematica.lower().strip()
 
-    if doc.exists:
-        palabras_disponibles = doc.to_dict().get("palabras", [])
+    if tematica == "animales":
 
-    if not palabras_disponibles:
-        try:
-             resultado = generar_palabras_contexto(tematica)
-             palabras_disponibles = resultado["palabras"]
-        except Exception as e:
-            return {"error": f"No se pudo generar palabras: {str(e)}"}
-
-        palabras_disponibles = [
-            "VOLCAN", "PIRATA", "COHETE", "DRAGON", "JUNGLA",
-            "TESORO", "BRUJULA", "TIBURON", "CASTILLO", "TORMENTA",
-            "ESPADA", "PLANETA", "LABERINTO", "FANTASMA", "EXPLOSION",
-            "SUBMARINO", "MONTAÑA", "ROBOT", "SELVA", "METEORO"
+        palabras = [
+            "LEON",
+            "TIGRE",
+            "ABEJA",
+            "DELFIN",
+            "KOALA"
         ]
 
-    palabra_elegida = random.choice(palabras_disponibles)
-    palabras_disponibles.remove(palabra_elegida)
+    else:
 
-    ref.set({
-        "nombre_original": tematica,
-        "palabras": palabras_disponibles
-    }, merge=True)
+        palabras = [
+            "CHINA",
+            "INDIA",
+            "JAPON",
+            "PERU",
+            "BRASIL"
+        ]
 
-    return {"palabra": palabra_elegida}
+    palabra_elegida = random.choice(
+        palabras
+    )
 
+    return {
+        "palabra": palabra_elegida
+    }
+
+
+def iniciar_partida(id_usuario: str, tematica: str) -> dict:
+    resultado = obtener_palabra_contexto(tematica)
+    if "error" in resultado:
+        return resultado
+
+    id_sesion = f"ctx_{id_usuario}_{int(datetime.utcnow().timestamp())}"
+
+    sesion = SesionContexto(
+        id_usuario=id_usuario,
+        tematica=tematica,
+        palabra=resultado["palabra"]
+    )
+
+    db.collection("partidas_contexto").document(id_sesion).set(sesion.to_dict())
+
+    return {
+        "id_sesion": id_sesion,
+        "tematica": tematica,
+        "max_intentos": MAX_INTENTOS
+    }
 
 def iniciar_partida(id_usuario: str, tematica: str) -> dict:
     resultado = obtener_palabra_contexto(tematica)

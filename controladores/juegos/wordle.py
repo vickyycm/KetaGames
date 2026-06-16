@@ -28,44 +28,36 @@ except Exception as e:
     print(f"Error al cargar el diccionario de palabras: {str(e)}")
 
 def obtener_palabra_de_tematica(tematica: str) -> dict:
-    
-    tematica_id = tematica.lower().strip()
-    ref_tematica = db.collection("tematicas_palabras").document(tematica_id)
-    doc = ref_tematica.get()
 
-    palabras_disponibles = []
-    pistas = {}
+    tematica = tematica.lower().strip()
 
-    if doc.exists:
-        data = doc.to_dict()
-        palabras_disponibles = data.get("palabras", [])
-        pistas = data.get("pistas", {})
+    paises = {
+        "CHINA": "País más poblado del mundo",
+        "JAPON": "País asiático famoso por el sushi",
+        "ITALI": "País europeo con forma de bota",
+        "INDIA": "Segundo país más poblado del mundo",
+        "CHILE": "País largo y angosto de Sudamérica"
+    }
 
-    if not palabras_disponibles:
-        resultado_ia_batch = {
-            "palabras": ["GATOS", "PERRO", "CASAS", "ARBOL", "PLAZA"],
-            "pistas": {
-                "GATOS": "Animal doméstico muy popular",
-                "PERRO": "El mejor amigo del hombre",
-                "CASAS": "Lugar donde viven las familias",
-                "ARBOL": "Planta grande con tronco leñoso",
-                "PLAZA": "Espacio público con juegos y pasto"
-            }
-        }
-        palabras_disponibles = resultado_ia_batch["palabras"]
-        pistas = resultado_ia_batch["pistas"]
+    animales = {
+        "ABEJA": "Insecto productor de miel",
+        "PERRO": "El mejor amigo del hombre",
+        "TIGRE": "Felino salvaje de rayas",
+        "CEBRA": "Animal africano con rayas",
+        "PANDA": "Animal blanco y negro de China"
+    }
 
-    palabra_elegida = random.choice(palabras_disponibles)
-    pista_elegida = pistas.get(palabra_elegida, "Sin pista disponible")
+    if tematica == "animales":
+        palabras = animales
+    else:
+        palabras = paises
 
-    palabras_disponibles.remove(palabra_elegida)
-    ref_tematica.set({
-        "nombre_original": tematica,
-        "palabras": palabras_disponibles,
-        "pistas": pistas
-    }, merge=True)
+    palabra_elegida = random.choice(list(palabras.keys()))
 
-    return {"palabra": palabra_elegida, "pista": pista_elegida}
+    return {
+        "palabra": palabra_elegida,
+        "pista": palabras[palabra_elegida]
+    }
 
 
 def iniciar_partida(id_usuario: str, tematica: str) -> dict:

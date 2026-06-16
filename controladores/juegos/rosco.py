@@ -2,7 +2,7 @@ from datetime import datetime
 from db.firebase import db
 from modelos.juegos.rosco import SesionRosco
 from servicios.rosco_servicio import (
-    generar_preguntas_demo,
+    generar_preguntas_por_tematica,
     obtener_siguiente_letra,
     calcular_puntaje
 )
@@ -11,7 +11,9 @@ from servicios.auth_servicio import actualizar_estadisticas_usuario
 
 def iniciar_partida(id_usuario: str, tematica: str) -> dict:
 
-    preguntas = generar_preguntas_demo()
+    preguntas = generar_preguntas_por_tematica(
+        tematica
+    )
     id_sesion = f"rosco_{id_usuario}_{int(datetime.utcnow().timestamp())}"
 
     sesion = SesionRosco(
