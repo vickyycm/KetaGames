@@ -293,7 +293,7 @@ body {
 
 @media (max-width: 1024px) {
     .rosco-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important; 
         gap: 2rem;
         padding: 2rem 1.5rem;
     }
@@ -311,77 +311,90 @@ body {
     }
 
     .rosco-board-section {
+        display: flex;
         justify-content: center;
     }
 }
 
 @media (max-width: 768px) {
+    .rosco-board-wrapper {
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+        gap: 1.5rem; 
+        width: 100%;
+    }
+
     .rosco-board {
-        width: 420px;
-        height: 420px;
+        position: relative; 
+        width: 340px !important;
+        height: 340px !important;
+        margin: 0 auto;
+    }
+
+    
+    .rosco-input-area {
+        position: static !important; 
+        transform: none !important;  
+        width: 100%;
+        max-width: 320px; 
+        margin: 0 auto;
+        z-index: 10;
     }
 
     .letra {
-        width: 38px;
-        height: 38px;
-        font-size: 0.9rem;
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 0.85rem;
+    }
+
+    #respuesta-input {
+        width: 100%;
+        padding: 0.7rem;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
+
+    .rosco-actions {
+        margin-top: 0.75rem;
+        display: flex;
+        gap: 0.75rem;
     }
 
     .btn {
-        padding: 0.7rem 1.5rem;
-        font-size: 0.9rem;
-    }
-
-    .metric-label {
-        font-size: 0.75rem;
-    }
-
-    .metric-value {
-        font-size: 1rem;
+        flex: 1;
+        padding: 0.7rem 1rem !important;
+        font-size: 0.9rem !important;
     }
 }
 
 @media (max-width: 480px) {
     .rosco-container {
-        padding: 1.5rem 1rem;
-    }
-
-    .rosco-board {
-        width: 320px;
-        height: 320px;
-    }
-
-    .letra {
-        width: 30px;
-        height: 30px;
-        font-size: 0.75rem;
-    }
-
-    .rosco-panel {
-        flex-direction: column;
-    }
-
-    .metric-card {
         padding: 1rem;
     }
 
-    .metric-card-title {
-        font-size: 0.9rem;
+    .rosco-board {
+        width: 290px !important; 
+        height: 290px !important;
+    }
+
+    .rosco-input-area {
+        max-width: 290px;
+    }
+
+    .letra {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 0.75rem;
     }
 
     .rosco-actions {
-        flex-direction: column;
-        gap: 0.75rem;
+        flex-direction: column; 
+        gap: 0.5rem;
     }
 
     .btn {
-        width: 100%;
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
-    }
-
-    .result-title {
-        font-size: 1.8rem;
+        width: 100% !important;
     }
 }
 
