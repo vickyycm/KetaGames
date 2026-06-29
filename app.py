@@ -1,0 +1,71 @@
+from flask import Flask, render_template, session
+from rutas.juegos_ruta import juegos_bp
+from rutas.auth_ruta import auth_bp
+from rutas.admin_ruta import admin_bp
+
+app = Flask(__name__, template_folder='vistas')
+app.secret_key = "ketagames-secret"
+app.config.from_object('config.Config')
+
+app.register_blueprint(juegos_bp)
+app.register_blueprint(auth_bp)
+app.register_blueprint(admin_bp)
+
+@app.context_processor
+def inject_usuario():
+    from db.firebase import db
+    es_admin = False
+    uid = session.get("uid")
+    if uid and uid != "invitado":
+        doc = db.collection("usuarios").document(uid).get()
+        if doc.exists:
+            es_admin = doc.to_dict().get("rol") == "admin"
+    return {
+        "usuario_logueado": "uid" in session,
+        "usuario_nombre": session.get("nombre", ""),
+        "es_admin": es_admin
+    }
+
+@app.route('/')
+def index():
+    """Página de inicio"""
+    return render_template('index.html')
+
+
+@app.route('/auth/login')
+def login():
+    """Página de login"""
+    return render_template('auth/login.html')
+
+
+@app.route('/auth/registro')
+def registro():
+    """Página de registro"""
+    return render_template('auth/registro.html')
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    return render_template('500.html'), 500
+
+@app.route('/sobre-nosotros')
+def sobre_nosotros():
+    return render_template('sobre_nosotros.html')
+
+@app.route('/privacidad')
+def privacidad():
+    return render_template('privacidad.html')
+
+@app.route('/contacto')
+def contacto():
+    return render_template('contacto.html')
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+    

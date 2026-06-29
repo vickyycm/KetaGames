@@ -1,0 +1,445 @@
+body {
+    margin: 0;
+    background: var(--color-dark-bg, #111827);
+    color: var(--color-text-white, #fff);
+    font-family: 'Bricolage Grotesque', Arial, Helvetica, sans-serif;
+}
+
+.rosco-container {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 3rem;
+    padding: 3rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: calc(100vh - 200px);
+}
+
+.rosco-board-section {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 1rem;
+}
+
+.rosco-board {
+    width: 650px;
+    height: 650px;
+    position: relative;
+}
+
+.letra {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background: rgba(148, 163, 184, 0.1);
+    border: 2px solid rgba(148, 163, 184, 0.2);
+    color: var(--color-text-secondary, #94a3b8);
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.letra-activa {
+    background: rgba(168, 85, 247, 0.2);
+    border: 2px solid var(--color-primary-violet, #a855f7);
+    color: var(--color-primary-violet, #a855f7);
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+}
+
+.letra-correcta {
+    background: #538d4e;
+    border-color: #538d4e;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(83, 141, 78, 0.3);
+}
+
+.letra-incorrecta {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.letra-pasada {
+    background: #b59f3b;
+    border-color: #b59f3b;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(181, 159, 59, 0.3);
+}
+
+.rosco-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: sticky;
+    top: 80px;
+}
+
+.metric-card {
+    background: linear-gradient(135deg, var(--color-dark-card, #1f2937) 0%, var(--color-dark-card-alt, #1a1f2e) 100%);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.metric-card:hover {
+    border-color: rgba(168, 85, 247, 0.4);
+    box-shadow: 0 8px 20px rgba(168, 85, 247, 0.15);
+}
+
+.metric-card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--color-text-white, #fff);
+    margin: 0 0 1.2rem 0;
+}
+
+.metrics-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.metric-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+}
+
+.metric-item:last-child {
+    border-bottom: none;
+}
+
+.metric-label {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary, #94a3b8);
+    font-weight: 500;
+}
+
+.metric-value {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-accent-yellow, #eab308);
+    letter-spacing: 1px;
+}
+
+.rosco-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.rosco-tematica {
+    font-size: 1.1rem;
+    color: var(--color-primary-violet, #a855f7);
+    font-weight: 600;
+}
+
+.rosco-letra-actual {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-accent-yellow, #eab308);
+    letter-spacing: 2px;
+}
+
+.rosco-pregunta {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary, #94a3b8);
+    line-height: 1.5;
+    min-height: 2.5rem;
+}
+
+#respuesta-input {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    background: rgba(30, 32, 48, 0.8);
+    border: 2px solid rgba(168, 85, 247, 0.3);
+    border-radius: 12px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1rem;
+    color: var(--color-text-white, #fff);
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+}
+
+#respuesta-input::placeholder {
+    color: var(--color-text-secondary, #94a3b8);
+    opacity: 0.8;
+}
+
+#respuesta-input:focus {
+    border-color: var(--color-primary-violet, #a855f7);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3), inset 0 0 15px rgba(168, 85, 247, 0.05);
+}
+
+.rosco-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    letter-spacing: 1px;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-primary-violet, #a855f7) 0%, var(--color-primary-violet-bright, #c084fc) 100%);
+    color: #000;
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.btn-primary:hover::before {
+    opacity: 1;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.6);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--color-text-secondary, #94a3b8);
+    border: 2px solid rgba(148, 163, 184, 0.4);
+}
+
+.btn-outline:hover {
+    border-color: var(--color-primary-violet, #a855f7);
+    color: var(--color-primary-violet, #a855f7);
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
+}
+
+.respuesta-correcta {
+    font-size: 0.85rem;
+    color: #f87171;
+    font-weight: 600;
+    min-height: 1.2rem;
+    margin: 0;
+}
+
+.result-screen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 999;
+}
+
+.result-screen.visible {
+    display: flex;
+}
+
+#pantalla-resultado {
+    min-height: calc(100vh - 200px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 3rem 2rem;
+}
+
+.result-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    letter-spacing: 3px;
+    color: var(--color-text-white, #fff);
+}
+
+.result-score {
+    font-family: 'Courier New', monospace;
+    font-size: 1.4rem;
+    color: var(--color-accent-yellow, #eab308);
+    font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+    .rosco-container {
+        grid-template-columns: 1fr !important; 
+        gap: 2rem;
+        padding: 2rem 1.5rem;
+    }
+
+    .rosco-panel {
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .metric-card {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .rosco-board-section {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .rosco-board-wrapper {
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+        gap: 1.5rem; 
+        width: 100%;
+    }
+
+    .rosco-board {
+        position: relative; 
+        width: 340px !important;
+        height: 340px !important;
+        margin: 0 auto;
+    }
+
+    
+    .rosco-input-area {
+        position: static !important; 
+        transform: none !important;  
+        width: 100%;
+        max-width: 320px; 
+        margin: 0 auto;
+        z-index: 10;
+    }
+
+    .letra {
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 0.85rem;
+    }
+
+    #respuesta-input {
+        width: 100%;
+        padding: 0.7rem;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
+
+    .rosco-actions {
+        margin-top: 0.75rem;
+        display: flex;
+        gap: 0.75rem;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 0.7rem 1rem !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .rosco-container {
+        padding: 1rem;
+    }
+
+    .rosco-board {
+        width: 290px !important; 
+        height: 290px !important;
+    }
+
+    .rosco-input-area {
+        max-width: 290px;
+    }
+
+    .letra {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 0.75rem;
+    }
+
+    .rosco-actions {
+        flex-direction: column; 
+        gap: 0.5rem;
+    }
+
+    .btn {
+        width: 100% !important;
+    }
+}
+
+.game-banner {
+    background: linear-gradient(135deg, var(--color-dark-card) 0%, var(--color-dark-card-alt) 100%);
+    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.game-banner-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--color-text-white);
+}
+
+.game-banner-score {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+}
+
+#score-valor {
+    color: var(--color-accent-yellow);
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.rosco-board-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.rosco-input-area {
+    width: 100%;
+    max-width: 650px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}

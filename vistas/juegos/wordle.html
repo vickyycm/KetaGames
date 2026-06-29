@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palabra del Día - KetaGames</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/wordle.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="{{ url_for('index') }}" class="navbar-logo">KETAGAMES</a>
+        {% if usuario_logueado %}
+            <div style="display:flex; align-items:center; gap:1rem;">
+
+    {% if es_admin %}
+    <a href="{{ url_for('admin.panel') }}"
+       style="color:var(--color-text-secondary); font-size:0.9rem; text-decoration:none; font-weight:600;">
+        {{ usuario_nombre }}
+    </a>
+    {% else %}
+    <a href="{{ url_for('auth_bp.perfil') }}"
+       style="color:var(--color-text-secondary); font-size:0.9rem; text-decoration:none; font-weight:600;">
+        {{ usuario_nombre }}
+    </a>
+    {% endif %}
+
+    <a
+        href="{{ url_for('auth_bp.logout') }}"
+        class="navbar-btn"
+    >
+        Salir
+    </a>
+
+</div>
+        {% else %}
+            <a href="{{ url_for('login') }}?next={{ request.full_path | urlencode }}" class="navbar-btn">Ingresá</a>
+        {% endif %}
+    </nav>
+
+    <section class="game-banner">
+        <h1 class="game-banner-title">JUEGO / Palabra del día</h1>
+        <div class="game-banner-score">
+            Score: <span class="score-value" id="score-valor">0</span>
+        </div>
+    </section>
+
+    <main class="wordle-container">
+
+        <div class="wordle-left-column">
+
+            <div class="wordle-info">
+                <span id="label-tematica" class="wordle-tematica"></span>
+                <span id="label-pista" class="wordle-pista"></span>
+            </div>
+
+            <div class="wordle-board" id="tablero"></div>
+
+            <p class="wordle-instruction" id="instruccion">Introducí tu primera palabra para comenzar.</p>
+
+            <p id="error-juego" class="error-message"></p>
+
+            <div class="wordle-actions">
+                <button class="btn btn-primary" onclick="confirmarIntento()">ENVIAR</button>                
+                <button class="btn btn-outline" onclick="mostrarPista()">PISTA</button>
+            </div>
+
+        </div>
+
+        <aside class="wordle-right-column">
+
+            <div class="metric-card">
+                <h3 class="metric-card-title">INTENTOS</h3>
+                <div class="timer-container">
+                    <div class="timer-display" id="contador-intentos">0 / 6</div>
+                    <div class="timer-progress">
+                        <div class="timer-bar dynamic-width" id="barra-intentos"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <h3 class="metric-card-title">MÉTRICAS</h3>
+                <div class="metrics-list">
+                    <div class="metric-item">
+                        <span class="metric-label">Intentos usados</span>
+                        <span class="metric-value" id="metrica-intentos">0</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Letras correctas</span>
+                        <span class="metric-value" id="metrica-correctas">0</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Exactitud</span>
+                        <span class="metric-value" id="metrica-exactitud">0%</span>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+    </main>
+
+    <div id="pantalla-resultado" class="result-screen">
+        <div id="resultado-icono" class="result-icon"></div>
+        <h2 id="resultado-titulo" class="result-title"></h2>
+        <p id="resultado-palabra" class="result-word"></p>
+        <p id="resultado-puntaje" class="result-score"></p>
+
+        {% set url_juego = url_for('juegos.seleccionar_tematica', juego='wordle') %}
+
+        <button class="btn btn-primary" onclick="window.location.href='{{ url_juego }}'">
+            Jugar de nuevo
+        </button>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-column footer-brand">
+            <h3 class="footer-title">KetaGames</h3>
+            <p class="footer-credit">© 2026 KetaGames</p>
+        </div>
+        <div class="footer-column footer-links">
+            <a href="{{ url_for('sobre_nosotros') }}" class="footer-link">Sobre Nosotros</a>
+            <a href="{{ url_for('privacidad') }}" class="footer-link">Privacidad</a>
+            <a href="{{ url_for('contacto') }}" class="footer-link">Contacto</a>
+        </div>
+    </footer>
+
+<script>
+    const datosSesionTexto = '{{ sesion | tojson if sesion else "{}" }}';
+    const SESION = JSON.parse(datosSesionTexto);
+    const USUARIO_LOGUEADO = "{{ 'true' if usuario_logueado else 'false' }}" === "true";
+</script>
+
+<script src="{{ url_for('static', filename='js/wordle.js') }}"></script>
+
+</body>
+</html>     

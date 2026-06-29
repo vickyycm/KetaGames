@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nosotros - KetaGames</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/wordle.css') }}">
+
+    <style>
+        body {
+            background-color: #0f111a;
+            color: white;
+            font-family: 'Bricolage Grotesque', sans-serif;
+            padding: 2rem 1.25rem; /* Copiado de privacidad: margen perfecto para celu */
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            box-sizing: border-box;
+        }
+        
+        h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            color: #a855f7;
+            font-size: clamp(2.2rem, 8vw, 3.5rem); /* Texto fluido */
+            letter-spacing: 2px;
+            border-bottom: 2px solid #a855f7;
+            padding-bottom: 0.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            color: #a855f7;
+            font-size: clamp(1.6rem, 5vw, 2.2rem); /* Texto fluido */
+            letter-spacing: 1px;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        p, ul {
+            font-weight: 300;
+            font-size: clamp(0.95rem, 2.5vw, 1.15rem); /* Texto fluido */
+        }
+
+        .tarjeta-miembro {
+            margin-bottom: 0.8rem;
+            padding: 0.6rem 1rem;
+            background: #1a1d29;
+            border-left: 4px solid #a855f7;
+            border-radius: 4px;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background: #a855f7;
+            color: white;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            padding: 0.5rem 2rem;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 1rem;
+            transition: background 0.3s;
+        }
+
+        .btn-back:hover {
+            background: #9333ea;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Sobre Nosotros</h1>
+    
+    <p>
+        <strong>KetaGames</strong> es una plataforma web interactiva de juegos de palabras y lógica nacida como proyecto integrador para la carrera de <strong>Analista de Sistemas</strong> en la <strong>Escuela Da Vinci</strong>. Desarrollado específicamente para la materia <strong>Análisis y Metodología de Sistemas</strong>, bajo la tutoría del profesor <strong>Gabriel Ernesto Cavasso</strong>.
+    </p>
+
+    <h2>El Equipo de Desarrollo</h2>
+    <ul style="list-style: none; padding-left: 0; margin-bottom: 2rem;">
+        <li class="tarjeta-miembro">
+            <strong>Caterina Lourdes Marquez</strong> (alias <em style="color: #a855f7;">Keta</em>)
+        </li>
+        <li class="tarjeta-miembro">
+            <strong>Nicolas De Vicenzo Nevach</strong> (alias <em style="color: #a855f7;">Nico</em>)
+        </li>
+        <li class="tarjeta-miembro">
+            <strong>Victoria Cossi Mazza</strong> (alias <em style="color: #a855f7;">Vicky</em>)
+        </li>
+    </ul>
+
+    <h2>Propuesta Metodológica y Funcional</h2>
+    <p>
+        El corazón de KetaGames es la <strong>dinamicidad mediante Inteligencia Artificial</strong>. A diferencia de los juegos tradicionales, nuestra arquitectura modular en Python y Flask permite que un modelo de IA adapte el contenido en tiempo real según la temática o categoría elegida por el usuario antes de empezar.
+    </p>
+    <p style="margin-bottom: 1.5rem;">
+        La plataforma integra tres mecánicas principales diseñadas bajo una separación estricta de lógica de backend y frontend:
+    </p>
+    <ul style="margin-bottom: 3rem; padding-left: 1.5rem;">
+        <li style="margin-bottom: 0.5rem;"><strong>Palabra del Día:</strong> Descubrir la palabra oculta relacionada con la temática mediante un sistema de evaluación de intentos.</li>
+        <li style="margin-bottom: 0.5rem;"><strong>Rosco:</strong> El clásico formato alfabético adaptado con definiciones dinámicas.</li>
+        <li style="margin-bottom: 0.5rem;"><strong>Contexto:</strong> Un juego de asociación semántica avanzada para encontrar la palabra objetivo mediante proximidad contextual.</li>
+    </ul>
+
+    <a href="{{ url_for('index') }}" class="btn-back">← Volver a KetaGames</a>
+</body>
+</html>
